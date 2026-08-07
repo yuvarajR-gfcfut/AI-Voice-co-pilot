@@ -19,9 +19,17 @@ DASHBOARD_FEED_PATH = Path(__file__).resolve().parent / "dashboard" / "live_feed
 
 
 def run_transcript(transcript_obj: dict):
-    customer_id = transcript_obj["customer_id"]
-    turns = transcript_obj["turns"]
-    outcome = transcript_obj.get("label", "unknown")  # "won" / "drop-off" from your synthetic data
+    # Dynamically adapt new transcripts JSON format to internal pipeline structure
+    customer_id = transcript_obj["call_id"]
+    turns_raw = transcript_obj["transcript"]
+    outcome = "drop-off" if transcript_obj.get("outcome") == "drop_off" else "won"
+    
+    turns = []
+    for t in turns_raw:
+        turns.append({
+            "speaker": "customer" if t["speaker"] == "prospect" else t["speaker"],
+            "text": t["message"]
+        })
 
     seen_turns = []
     last_intent = None
@@ -129,7 +137,7 @@ def main():
     DASHBOARD_FEED_PATH.parent.mkdir(parents=True, exist_ok=True)
     DASHBOARD_FEED_PATH.write_text("[]")
     
-    transcripts = json.loads(TRANSCRIPTS_PATH.read_text())
+    transcripts = json.loads(TRANSCRIPTS_PATH.read_text())["calls"]
     for t in transcripts:
         run_transcript(t)
 

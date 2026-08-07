@@ -1,14 +1,30 @@
-- Eligibility: Minimum age of 21 years and maximum age of 58 years at the time of loan application.
-- Eligibility: Active salaried or self-employed employment status with a minimum monthly net income of ₹15,000.
-- Eligibility: Minimum credit score (CIBIL) of 650 is required with no default history in the last 24 months.
-- Fees: Truly zero-cost EMI with 0% interest rate and ₹0 processing fees; customer pays only the product purchase price.
-- Fees: No hidden charges, but a late payment fee of 3% per month on the outstanding overdue amount applies if a payment is missed.
-- Tenure: Total tenure is 3 months with the repayment split into 3 equal monthly installments of 33.33% each.
-- Schedule: First payment (1/3rd) is charged upfront at transaction checkout; remaining 2 installments are auto-debited on the 5th of the next two months.
-- KYC: Requires a valid Permanent Account Number (PAN) and Aadhaar card linked to an active mobile number for e-KYC verification.
-- KYC: Digital bank statement verification or net banking credential login for the last 3 months is required to assess income.
-- Objection: "Is this a loan?" -> Approved Response: It is a short-term, interest-free credit facility. To comply with regulatory guidelines, it is reported to credit bureaus as a consumer durable loan.
-- Objection: "What if I miss a payment date?" -> Approved Response: A late fee of 3% per month applies, and a delay will be reported to credit bureaus, which can lower your credit score.
-- Objection: "Can I prepay the remaining installments early?" -> Approved Response: Yes, you can prepay any or all outstanding installments at any time through the customer portal with zero foreclosure charges.
-- Objection: "Why do you need my bank statement if it is zero-cost?" -> Approved Response: We require your bank statement to confirm income eligibility and verify that the monthly installment matches your repayment capacity.
-- Objection: "Is there any auto-debit requirement?" -> Approved Response: Yes, setting up an auto-debit (e-NACH) mandate via debit card or net banking is mandatory during checkout to ensure automated monthly repayments.
+# Pay-in-3 Zero-Cost EMI Knowledge Base
+
+- **Eligibility: Minimum Age**: Customers must be between 21 and 60 years old at the time of purchase to qualify for the financing plan.
+- **Eligibility: Minimum Income**: A verified minimum monthly net income of ₹25,000 for salaried employees or ₹40,000 for self-employed individuals.
+- **Eligibility: Credit Score**: A minimum CIBIL credit score of 650 is required, with no defaults or active settlements in the last 24 months.
+- **Eligibility: Employment Status**: Must be actively employed (minimum 6 months at current job) or self-employed with 1 year of business proof.
+- **Fee Structure: Zero-Cost Interest**: The product offers a 0% interest rate to the customer, as the merchant subsidizes the financing cost.
+- **Fee Structure: Processing Fees**: A flat processing fee of ₹0 is charged at checkout, ensuring the customer pays only the product purchase price.
+- **Fee Structure: Late Payment Penalty**: A late payment fee of 3% per month is applied solely to the outstanding overdue amount, capped at ₹500.
+- **Tenure: Repayment Intervals**: The repayment is structured over a 60-day window, split into exactly 3 equal monthly installments of 33.33% each.
+- **Tenure: Repayment Timeline**: Payment 1 is auto-debited instantly at checkout; Payment 2 is due on Day 30; Payment 3 is due on Day 60.
+- **Required KYC: Permanent Account Number**: A valid PAN card is mandatory for real-time credit checks and tax compliance verification.
+- **Required KYC: Address Verification**: Aadhaar card verification linked to a working mobile number is required for OTP-based e-KYC validation.
+- **Required KYC: Income Proof**: Upload of a 3-month bank statement (PDF) or login via secure net banking is required to verify monthly income.
+- **Features: Soft Credit Inquiry**: The initial eligibility assessment runs a soft credit pull, which has 0% impact on the customer's credit score.
+- **Competitor Differentiation: No Hidden Cost**: Unlike competitors who charge onboarding or membership fees, our platform charges zero upfront fees.
+- **Competitor Differentiation: Bureau Reporting**: Timely repayments are reported to CIBIL and Experian, helping customers build their credit score positively.
+
+## Common Sales Objections & Handling Strategies
+
+1. **Objection: "Is this a loan? I don't want a credit product."**
+   - *Handling Strategy:* Clarify that it is reported as a short-term consumer loan to credit bureaus for regulatory compliance. Highlight that it differs from traditional credit because it carries 0% interest and has no annual fees.
+2. **Objection: "Will checking my eligibility impact my CIBIL score?"**
+   - *Handling Strategy:* Reassure the customer that the initial credit check is a soft inquiry. It will show up on their credit report but does not affect their CIBIL score or borrowing eligibility.
+3. **Objection: "What happens if I miss a payment? Will I be charged heavy interest?"**
+   - *Handling Strategy:* Explain that there is no retroactive interest. A late fee of 3% per month is charged only on the overdue amount (not the entire order), and automatic reminders will alert them 3 days before any auto-debit.
+4. **Objection: "Why do you need my PAN card? Is it safe?"**
+   - *Handling Strategy:* Explain that PAN is legally required under RBI guidelines for digital KYC and identity verification. Assure them that all data is fully encrypted using bank-grade AES-256 security.
+5. **Objection: "Are there any hidden processing or onboarding fees?"**
+   - *Handling Strategy:* Confirm that there are absolutely zero setup, annual maintenance, or processing fees. The merchant pays for the financing platform, ensuring the customer pays only the sticker price of the product.

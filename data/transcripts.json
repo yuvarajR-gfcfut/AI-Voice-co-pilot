@@ -1,146 +1,444 @@
-[
-  {
-    "customer_id": "CUST_001",
-    "label": "won",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hi, I am looking to purchase a phone, but I see a pay-in-3 zero-cost EMI option. Is this some kind of loan?"},
-      {"speaker": "agent", "text": "It is a short-term, interest-free credit facility. To comply with regulatory guidelines, it is reported to credit bureaus as a consumer durable loan, but there is no interest charged."},
-      {"speaker": "customer", "text": "Ah, okay. So it won't cost me anything extra?"},
-      {"speaker": "agent", "text": "Exactly, it is completely interest-free. First payment is upfront at checkout, and the next two are debited automatically."},
-      {"speaker": "customer", "text": "Alright, that sounds simple enough. Let's do it."},
-      {"speaker": "agent", "text": "Perfect! Please complete the Aadhaar verification on your screen."},
-      {"speaker": "customer", "text": "Okay, I've entered the OTP and it went through. Thanks!"}
-    ]
-  },
-  {
-    "customer_id": "CUST_002",
-    "label": "won",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hello, I'm trying to check out with pay-in-3, but it's asking for my PAN card. Why do you need my PAN?"},
-      {"speaker": "agent", "text": "We require your PAN and Aadhaar details to perform standard e-KYC verification. It helps us confirm your identity and verify eligibility."},
-      {"speaker": "customer", "text": "Will it do a hard check on my credit report?"},
-      {"speaker": "agent", "text": "We do a soft check initially to check eligibility, which doesn't affect your credit score."},
-      {"speaker": "customer", "text": "Okay. I've entered my PAN details now."},
-      {"speaker": "agent", "text": "Great, the verification is successful. You can proceed to set up the auto-debit to complete the purchase."},
-      {"speaker": "customer", "text": "Great, done. The transaction is complete!"}
-    ]
-  },
-  {
-    "customer_id": "CUST_003",
-    "label": "drop-off",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hi, I want to use the pay-in-3 option, but what happens if I miss a payment date? Like, if my salary gets delayed?"},
-      {"speaker": "agent", "text": "If a payment is missed, a late fee of 3% per month applies on the outstanding overdue amount. Also, a delay is reported to credit bureaus."},
-      {"speaker": "customer", "text": "Oh, 3% per month? And reporting to credit bureaus can ruin my credit score."},
-      {"speaker": "agent", "text": "Yes, timely repayments are important. We do send reminders before the due date."},
-      {"speaker": "customer", "text": "I don't want to risk my credit score over a delayed salary. I think I'll pass on this and buy it later."},
-      {"speaker": "agent", "text": "I understand your concern. You can always use other payment methods at checkout."},
-      {"speaker": "customer", "text": "Thanks, I'll think about it. Goodbye."}
-    ]
-  },
-  {
-    "customer_id": "CUST_004",
-    "label": "won",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hey there, is this pay-in-3 option truly zero-cost? Are there any hidden processing fees or interest rates?"},
-      {"speaker": "agent", "text": "Yes, it is truly zero-cost. There are no interest rates or hidden processing fees. You only pay the exact purchase price split into three payments."},
-      {"speaker": "customer", "text": "So if a product is ₹9,000, I pay ₹3,000 now and then ₹3,000 for the next two months?"},
-      {"speaker": "agent", "text": "Yes, exactly. The first ₹3,000 is paid today at checkout, and the rest is auto-debited on the 5th of the next two months."},
-      {"speaker": "customer", "text": "Alright, that is perfect. How do I activate it?"},
-      {"speaker": "agent", "text": "Just complete the Aadhaar e-KYC and set up your auto-debit mandate via net banking or debit card."},
-      {"speaker": "customer", "text": "Okay, completing the e-KYC now... done! It says order placed."},
-      {"speaker": "agent", "text": "Wonderful! Your order is confirmed. Thank you."}
-    ]
-  },
-  {
-    "customer_id": "CUST_005",
-    "label": "drop-off",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hi, I see the pay-in-3 payment option, but I already have a few loans. Does this get reported as another loan on my profile?"},
-      {"speaker": "agent", "text": "Yes, to comply with regulatory guidelines, this interest-free credit facility is reported to credit bureaus as a consumer durable loan."},
-      {"speaker": "customer", "text": "Oh no, I am planning to apply for a home loan next month. I don't want another active loan showing on my CIBIL."},
-      {"speaker": "agent", "text": "We understand. Having multiple active loans might impact your debt-to-income ratio."},
-      {"speaker": "customer", "text": "Yeah, my mortgage advisor told me not to take any new loans or credit lines. I'll just pay upfront with my debit card."},
-      {"speaker": "agent", "text": "That's a safe choice for your home loan. Let me know if you need help with the debit card payment."},
-      {"speaker": "customer", "text": "No, I can manage that. Thank you."}
-    ]
-  },
-  {
-    "customer_id": "CUST_006",
-    "label": "won",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hello, I want to try this pay-in-3 feature, but my CIBIL score is around 670. Am I eligible?"},
-      {"speaker": "agent", "text": "Our minimum credit score requirement is 650 with no default history in the last 24 months, so you meet the eligibility criteria."},
-      {"speaker": "customer", "text": "Awesome. Do I need to submit any income proof or physical documents?"},
-      {"speaker": "agent", "text": "No physical documents are required. We just need digital verification of your PAN, Aadhaar, and a 3-month bank statement."},
-      {"speaker": "customer", "text": "Great, I have my net banking details ready to verify my bank statement."},
-      {"speaker": "agent", "text": "Super! Please complete the verification steps on your checkout screen."},
-      {"speaker": "customer", "text": "Done. The system says I'm eligible and checkout is successful!"},
-      {"speaker": "agent", "text": "Excellent! Your order has been placed. You're good to go."}
-    ]
-  },
-  {
-    "customer_id": "CUST_007",
-    "label": "drop-off",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hi, I am trying to buy a laptop using pay-in-3, but it's asking for my PAN card number. I don't feel comfortable sharing my PAN online."},
-      {"speaker": "agent", "text": "I understand your concern. We require PAN and Aadhaar for e-KYC to verify identity and comply with financial regulations."},
-      {"speaker": "customer", "text": "Is there any way to skip the PAN card and just use my debit card details?"},
-      {"speaker": "agent", "text": "Unfortunately, PAN is mandatory for credit evaluation and KYC compliance. We cannot process the credit limit without it."},
-      {"speaker": "customer", "text": "I see. I'm not comfortable sharing financial identifiers like PAN on this app. I'll buy it somewhere else."},
-      {"speaker": "agent", "text": "We prioritize data security, but we respect your choice. Let us know if you change your mind."},
-      {"speaker": "customer", "text": "Sure, thanks anyway."}
-    ]
-  },
-  {
-    "customer_id": "CUST_008",
-    "label": "won",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hello, regarding the pay-in-3 plan, what if I want to pay off the entire amount early? Are there prepayment penalties?"},
-      {"speaker": "agent", "text": "Not at all. You can prepay any or all outstanding installments at any time through our customer portal with zero foreclosure charges."},
-      {"speaker": "customer", "text": "That's great. What if I miss the auto-debit? Can I pay manually on the same day?"},
-      {"speaker": "agent", "text": "Yes, you can pay manually. If you pay within the grace period, it won't attract late fees, which are otherwise 3% per month."},
-      {"speaker": "customer", "text": "Okay, that's flexible. I'll go ahead with this option."},
-      {"speaker": "agent", "text": "Perfect. Please complete the e-KYC and set up the auto-debit mandate."},
-      {"speaker": "customer", "text": "Done, e-KYC is approved and auto-debit is linked. Transaction successful!"},
-      {"speaker": "agent", "text": "Thank you for choosing us! Your order is being processed."}
-    ]
-  },
-  {
-    "customer_id": "CUST_009",
-    "label": "won",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hi, I'm a freelancer earning about 20,000 rupees a month. Am I eligible for the pay-in-3 option?"},
-      {"speaker": "agent", "text": "Yes, we accept both salaried and self-employed individuals with a minimum monthly net income of ₹15,000."},
-      {"speaker": "customer", "text": "Great! How do I verify my freelance income?"},
-      {"speaker": "agent", "text": "You'll just need to link your bank account for a digital verification of your last 3 months' bank statements."},
-      {"speaker": "customer", "text": "Got it. I've uploaded the statement pdf. Let's see if it works."},
-      {"speaker": "agent", "text": "It takes just a moment... Yes, it's approved! You can now complete the auto-debit setup."},
-      {"speaker": "customer", "text": "Fantastic! Completed the checkout. Thank you for the quick help."},
-      {"speaker": "agent", "text": "You're welcome! Have a great day ahead."}
-    ]
-  },
-  {
-    "customer_id": "CUST_010",
-    "label": "drop-off",
-    "turns": [
-      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
-      {"speaker": "customer", "text": "Hello, I'm setting up the pay-in-3, and it's asking me to set up an e-NACH auto-debit mandate. Can I just pay manually every month?"},
-      {"speaker": "agent", "text": "Setting up an auto-debit mandate via debit card or net banking is mandatory. This ensures timely repayments and helps you avoid late fees."},
-      {"speaker": "customer", "text": "I don't like giving apps permission to pull money from my account automatically. It feels risky."},
-      {"speaker": "agent", "text": "We only debit the agreed installment of 1/3rd the purchase price on the 5th of the month. It is highly secure."},
-      {"speaker": "customer", "text": "Still, I prefer manual payments so I can control my cash flow. If auto-debit is compulsory, I won't proceed."},
-      {"speaker": "agent", "text": "We understand. Unfortunately, auto-debit is required to access the interest-free terms."},
-      {"speaker": "customer", "text": "Okay, then I will cancel this checkout. Thanks for explaining."}
-    ]
-  }
-]
+{
+  "calls": [
+    {
+      "call_id": "CALL_001",
+      "outcome": "won",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. How can I help you today?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "Hi, I am looking to purchase a phone on your site, and I saw a pay-in-3 zero-cost EMI option. Is this a loan?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "It is structured as a short-term consumer credit facility. For compliance, it's reported to credit bureaus as a consumer durable loan, but it carries 0% interest and has no annual fees."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Okay, but will it affect my CIBIL score if I apply?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "No, the initial eligibility check is just a soft pull on your credit. It will show up on your history but won't impact your CIBIL score at all."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Got it. What do I need to complete the verification?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "You just need a valid PAN card, Aadhaar linked to your mobile for OTP verification, and a 3-month bank statement. We can finish it digitally in 2 minutes."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 8,
+          "message": "That sounds easy enough. I have my PAN card handy. Let's do the KYC right now."
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_002",
+      "outcome": "won",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. Good morning, how can I assist you?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "Hello, I want to use your pay-in-3 payment method, but I'm worried about hidden charges. Are there processing fees?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "There are absolutely zero hidden costs. There is a ₹0 processing fee and a 0% interest rate. You only pay the exact sticker price of the product."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "So if the item is ₹15,000, I pay ₹5,000 every month?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "Yes, exactly! You pay ₹5,000 upfront today, ₹5,000 on Day 30, and the final ₹5,000 on Day 60. No extra rupees added."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Perfect. What documents do I need to upload?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "Just your PAN, Aadhaar for the OTP check, and your net banking login or a PDF bank statement for income check."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 8,
+          "message": "Okay, let's start the KYC. I will pull up my Aadhaar details now."
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_003",
+      "outcome": "drop_off",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. Hi, how can I help you today?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "I'm looking at your pay-in-3 checkout, but my salary gets delayed sometimes. What happens if I miss a payment?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "If a payment is missed, a late payment fee of 3% per month applies on the outstanding overdue amount. Also, a delay is reported to credit bureaus."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Oh, that's a problem. My salary comes on the 5th, but sometimes it is delayed until the 10th. I don't want late fees."
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "I understand. We send automatic reminders 3 days before any auto-debit so you can manage your balance, and we offer a 3-day grace window before applying fees."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "No, a 3-day window is not enough if my bank takes a week to clear salary. I think I'll pass on this and buy it later."
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "No worries. You can always checkout later when you feel more comfortable. Thank you for your time!"
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_004",
+      "outcome": "won",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. How can I help you finish checkout?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "Why do you require my PAN card number? I'm uncomfortable sharing my tax details online."
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "I completely understand your concern. The PAN is legally mandated by RBI guidelines for real-time digital KYC and identity verification to prevent fraud. Your data is encrypted using bank-grade AES-256 security."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Is it just for identification or will you check my credit history?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "It checks credit eligibility, but it uses a soft credit check that has 0% impact on your credit score. We require a minimum CIBIL score of 650."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "My credit score is 720, so that should be fine. Is Aadhaar mandatory too?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "Yes, Aadhaar linked to your mobile allows us to do an OTP verification in 10 seconds. It secures the checkout process."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 8,
+          "message": "Okay, that makes sense. I'll provide my PAN card. Let's proceed."
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_005",
+      "outcome": "drop_off",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. Hello, how can I help you?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "Hi, I am buying a laptop, but I see this is reported as a consumer loan. I am applying for a home loan next month. Will this impact it?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "To check your eligibility and proceed, we will need to perform digital verification. The facility is reported to bureaus as an active consumer loan, which could affect your debt-to-income ratio during a home loan evaluation."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Ah, yes, my loan officer told me not to open any new credit lines or loans until the home loan closes. So this will count as a new loan?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "Yes, it is legally reported as an active credit account to CIBIL. It might show up on your credit report."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Okay, then I cannot use this pay-in-3 method. I'll have to use my debit card directly to avoid credit reports. Thank you."
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "That is a wise decision. Good luck with your home purchase, and feel free to use us in the future!"
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_006",
+      "outcome": "won",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. How can I help you finish your purchase today?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "Hi, I'm 23 years old and just started working. Am I eligible for your pay-in-3 payment plan?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "Yes! Our eligibility criteria requires you to be between 21 and 60 years old. Since you're 23, you satisfy the age criteria."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Awesome. My monthly income is ₹28,000. Is there a minimum income requirement?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "Yes, we require a minimum verified monthly net income of ₹25,000 for salaried employees. Since you earn ₹28,000, you qualify perfectly."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Great! What address proofs do I need?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "Just your Aadhaar linked to your mobile. We will send an OTP to verify your address instantly."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 8,
+          "message": "Cool, I'll log in and do the KYC. I have my Aadhaar OTP ready."
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_007",
+      "outcome": "drop_off",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. Hello, how can I assist you with checkout?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "I tried checking out using the 3 installments option, but it got rejected. Can you tell me why?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "The system automatically assesses credit eligibility. Our policy requires a minimum CIBIL score of 650 with no default history in the last 24 months."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Ah, my credit score is around 590 because I missed a credit card payment last year. Can I get a waiver?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "Unfortunately, the CIBIL score cut-off is automated and hardcoded at 650 for risk assessment. We cannot bypass this score filter manually."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Okay, I understand. I'll ask my brother to purchase it or pay in full. Thanks."
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "You're welcome. Have a wonderful day!"
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_008",
+      "outcome": "won",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. How can I help you today?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "I'm purchasing some items and want to understand the exact payment schedule for the pay-in-3 plan."
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "The payment is split into 3 equal monthly payments. The first payment is auto-debited at checkout, followed by Day 30 and Day 60."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "So if my order is ₹9,000, how much do I pay today?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "You will pay ₹3,000 today at checkout. The second ₹3,000 will be debited next month on Day 30, and the final ₹3,000 on Day 60."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Okay, that works well. What details do you need for KYC?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "We need your PAN card, Aadhaar linked to your mobile, and a 3-month bank statement. We verify everything in real-time."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 8,
+          "message": "Perfect. I have my PAN and bank statement PDF. Let's do the KYC."
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_009",
+      "outcome": "won",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. Hello, how can I assist you?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "Hi, I don't want to log in to my net banking. Can I upload a PDF bank statement for income proof?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "Yes, absolutely! You can upload a PDF of your last 3-month bank statement directly on the portal. Just ensure it shows your salary credits."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Is there any charge for processing the PDF statement?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "No, there are zero processing fees. Uploading a PDF statement is completely free."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Okay, great. What other documents are required?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "Your PAN card and Aadhaar details for address verification. We will verify your identity via OTP."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 8,
+          "message": "Awesome. I'll upload the statement PDF and complete the KYC."
+        }
+      ]
+    },
+    {
+      "call_id": "CALL_010",
+      "outcome": "drop_off",
+      "transcript": [
+        {
+          "speaker": "agent",
+          "turn": 1,
+          "message": "This call may be recorded and AI-assisted for quality and compliance purposes. Hi, how can I help you finish checkout?"
+        },
+        {
+          "speaker": "prospect",
+          "turn": 2,
+          "message": "I'm trying to use pay-in-3, but my Aadhaar card is linked to an old phone number that I no longer use. Can I use a different number?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 3,
+          "message": "For address verification, the Aadhaar must be linked to your active mobile number so we can process the OTP securely. We cannot verify it manually or use a different number."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 4,
+          "message": "Well, my old phone number is inactive, and updating it at the Aadhaar center will take a week. Is there any other way?"
+        },
+        {
+          "speaker": "agent",
+          "turn": 5,
+          "message": "Unfortunately, OTP-based e-KYC linked to your Aadhaar-registered mobile is mandatory under regulatory rules. We cannot bypass this step."
+        },
+        {
+          "speaker": "prospect",
+          "turn": 6,
+          "message": "Okay, that's annoying. I won't update my Aadhaar just for this transaction. I will buy it somewhere else. Goodbye."
+        },
+        {
+          "speaker": "agent",
+          "turn": 7,
+          "message": "I understand. We apologize for the inconvenience. Thank you for calling!"
+        }
+      ]
+    }
+  ]
+}
