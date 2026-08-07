@@ -35,3 +35,25 @@ def mask_pii(text: str) -> str:
     text = re.sub(r"\b[A-Z]{5}\d{4}[A-Z]\b", "[PAN]", text)  # PAN format
     text = re.sub(r"\b\d{9,18}\b", "[ACCOUNT]", text)  # generic long account numbers
     return text
+
+
+if __name__ == "__main__":
+    print("--- Running guardrail.py PII Masking Unit Checks ---")
+    
+    # 1. Fake Phone Number
+    phone_text = "Please reach out to customer at 9876543210 for verification."
+    masked_phone = mask_pii(phone_text)
+    print(f"Original: {phone_text}")
+    print(f"Masked:   {masked_phone}\n")
+    
+    # 2. Fake PAN
+    pan_text = "The customer's PAN card is ABCDE1234F."
+    masked_pan = mask_pii(pan_text)
+    print(f"Original: {pan_text}")
+    print(f"Masked:   {masked_pan}\n")
+    
+    # 3. Fake Account Number
+    acc_text = "The repayment auto-debit will be pulled from account 123456789012."
+    masked_acc = mask_pii(acc_text)
+    print(f"Original: {acc_text}")
+    print(f"Masked:   {masked_acc}\n")
