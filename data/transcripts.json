@@ -1,0 +1,10 @@
+[
+  {
+    "customer_id": "CUST_001",
+    "label": "won",
+    "turns": [
+      {"speaker": "agent", "text": "This call may be recorded and AI-assisted for quality purposes."},
+      {"speaker": "customer", "text": "PASTE GEMINI-GENERATED TRANSCRIPT TURNS HERE"}
+    ]
+  }
+]
