@@ -52,8 +52,8 @@ def call_gemini(prompt: str, model_tier: str = "gemini-flash") -> str:
 
     genai.configure(api_key=api_key)
     
-    # Route model selection
-    model_name = "gemini-1.5-flash" if model_tier == "gemini-flash" else "gemini-1.5-pro"
+    # Route model selection to newer available models with active free quota
+    model_name = "gemini-3.5-flash-lite" if model_tier == "gemini-flash" else "gemini-3.5-flash"
     model = genai.GenerativeModel(model_name)
     
     response = model.generate_content(prompt)
