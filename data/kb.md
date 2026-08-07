@@ -1,10 +1,14 @@
-# Pay-in-3 Zero-Cost EMI — Knowledge Base
-
-<!-- PASTE GEMINI-GENERATED CONTENT BELOW. Keep it as flat bullet points -
-     the retrieval.py chunker splits on lines starting with - or * -->
-
-- (placeholder) Eligibility: ...
-- (placeholder) Fees: zero-cost EMI means ...
-- (placeholder) Tenure: ...
-- (placeholder) KYC documents required: PAN, Aadhaar, ...
-- (placeholder) Objection: "Is this a loan?" -> Correct response: ...
+- Eligibility: Minimum age of 21 years and maximum age of 58 years at the time of loan application.
+- Eligibility: Active salaried or self-employed employment status with a minimum monthly net income of ₹15,000.
+- Eligibility: Minimum credit score (CIBIL) of 650 is required with no default history in the last 24 months.
+- Fees: Truly zero-cost EMI with 0% interest rate and ₹0 processing fees; customer pays only the product purchase price.
+- Fees: No hidden charges, but a late payment fee of 3% per month on the outstanding overdue amount applies if a payment is missed.
+- Tenure: Total tenure is 3 months with the repayment split into 3 equal monthly installments of 33.33% each.
+- Schedule: First payment (1/3rd) is charged upfront at transaction checkout; remaining 2 installments are auto-debited on the 5th of the next two months.
+- KYC: Requires a valid Permanent Account Number (PAN) and Aadhaar card linked to an active mobile number for e-KYC verification.
+- KYC: Digital bank statement verification or net banking credential login for the last 3 months is required to assess income.
+- Objection: "Is this a loan?" -> Approved Response: It is a short-term, interest-free credit facility. To comply with regulatory guidelines, it is reported to credit bureaus as a consumer durable loan.
+- Objection: "What if I miss a payment date?" -> Approved Response: A late fee of 3% per month applies, and a delay will be reported to credit bureaus, which can lower your credit score.
+- Objection: "Can I prepay the remaining installments early?" -> Approved Response: Yes, you can prepay any or all outstanding installments at any time through the customer portal with zero foreclosure charges.
+- Objection: "Why do you need my bank statement if it is zero-cost?" -> Approved Response: We require your bank statement to confirm income eligibility and verify that the monthly installment matches your repayment capacity.
+- Objection: "Is there any auto-debit requirement?" -> Approved Response: Yes, setting up an auto-debit (e-NACH) mandate via debit card or net banking is mandatory during checkout to ensure automated monthly repayments.
