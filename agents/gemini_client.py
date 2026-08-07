@@ -10,6 +10,11 @@ import os
 import csv
 import time
 from pathlib import Path
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Rough public per-1M-token pricing (INR) — update with real numbers before your pitch slide.
 COST_PER_1M_TOKENS_INR = {
@@ -39,15 +44,17 @@ def log_decision(agent_name: str, model_tier: str, approx_tokens: int):
 
 def call_gemini(prompt: str, model_tier: str = "gemini-flash") -> str:
     """
-    TODO: replace the stub below with a real call, e.g.:
-
-        import google.generativeai as genai
-        genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-        model_name = "gemini-1.5-flash" if model_tier == "gemini-flash" else "gemini-1.5-pro"
-        model = genai.GenerativeModel(model_name)
-        response = model.generate_content(prompt)
-        text = response.text
-
-    Keep the log_decision() call so cost tracking stays automatic.
+    Calls the Gemini API using the google-generativeai SDK.
     """
-    raise NotImplementedError("Wire up google-generativeai here, then remove this line.")
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY environment variable is not set. Please set it in your .env file.")
+
+    genai.configure(api_key=api_key)
+    
+    # Route model selection
+    model_name = "gemini-1.5-flash" if model_tier == "gemini-flash" else "gemini-1.5-pro"
+    model = genai.GenerativeModel(model_name)
+    
+    response = model.generate_content(prompt)
+    return response.text
