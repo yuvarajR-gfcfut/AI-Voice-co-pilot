@@ -23,6 +23,8 @@ credit/loan decision — only suggest, the human decides.
 def suggest_action(transcript_so_far: list[dict], intent: str, kb_fact: str) -> str:
     transcript_text = "\n".join(f"{t['speaker']}: {t['text']}" for t in transcript_so_far)
     prompt = PROMPT_TEMPLATE.format(intent=intent, kb_fact=kb_fact, transcript=transcript_text)
-    result = call_gemini(prompt, model_tier="gemini-pro")
-    log_decision("action_agent", "gemini-pro", approx_tokens=len(prompt.split()) + 30)
+    # Call central Gemini client and unpack response and fallback flag
+    result, used_fallback = call_gemini(prompt, model_tier="gemini-pro")
+    # Log the decision including the fallback flag for cost reporting
+    log_decision("action_agent", "gemini-pro", approx_tokens=len(prompt.split()) + 30, used_fallback=used_fallback)
     return result.strip()

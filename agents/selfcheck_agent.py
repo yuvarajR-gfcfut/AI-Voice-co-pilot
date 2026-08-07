@@ -18,8 +18,10 @@ Reply with exactly "PASS" or "FAIL: <one-line reason>".
 
 def review(suggestion: str, kb_fact: str) -> tuple[bool, str]:
     prompt = PROMPT_TEMPLATE.format(kb_fact=kb_fact, suggestion=suggestion)
-    result = call_gemini(prompt, model_tier="gemini-flash")
-    log_decision("selfcheck_agent", "gemini-flash", approx_tokens=len(prompt.split()) + 10)
+    # Call central Gemini client and unpack response and fallback flag
+    result, used_fallback = call_gemini(prompt, model_tier="gemini-flash")
+    # Log the decision including the fallback flag for cost reporting
+    log_decision("selfcheck_agent", "gemini-flash", approx_tokens=len(prompt.split()) + 10, used_fallback=used_fallback)
     result = result.strip()
     if result.upper().startswith("PASS"):
         return True, ""

@@ -15,6 +15,8 @@ concern and inviting them to continue. Do not promise approval or specific terms
 
 def draft_followup(transcript: list[dict], reason: str) -> str:
     prompt = PROMPT_TEMPLATE.format(reason=reason)
-    result = call_gemini(prompt, model_tier="gemini-flash")
-    log_decision("followup_agent", "gemini-flash", approx_tokens=len(prompt.split()) + 15)
+    # Call central Gemini client and unpack response and fallback flag
+    result, used_fallback = call_gemini(prompt, model_tier="gemini-flash")
+    # Log the decision including the fallback flag for cost reporting
+    log_decision("followup_agent", "gemini-flash", approx_tokens=len(prompt.split()) + 15, used_fallback=used_fallback)
     return result.strip()

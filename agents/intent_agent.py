@@ -23,7 +23,9 @@ Customer statement: "{text}"
 
 def classify_intent(customer_text: str) -> str:
     prompt = PROMPT_TEMPLATE.format(intents=", ".join(INTENTS), text=customer_text)
-    result = call_gemini(prompt, model_tier="gemini-flash")
-    log_decision("intent_agent", "gemini-flash", approx_tokens=len(prompt.split()) + 5)
+    # Call central Gemini client and unpack response and fallback flag
+    result, used_fallback = call_gemini(prompt, model_tier="gemini-flash")
+    # Log the decision including the fallback flag for cost reporting
+    log_decision("intent_agent", "gemini-flash", approx_tokens=len(prompt.split()) + 5, used_fallback=used_fallback)
     label = result.strip().lower()
     return label if label in INTENTS else "other"

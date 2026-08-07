@@ -30,16 +30,17 @@ def _ensure_log_header():
     if not COST_LOG_PATH.exists():
         with open(COST_LOG_PATH, "w", newline="") as f:
             csv.writer(f).writerow(
-                ["timestamp", "agent", "model_tier", "approx_tokens", "approx_cost_inr"]
+                ["timestamp", "agent", "model_tier", "approx_tokens", "approx_cost_inr", "source"]
             )
 
 
-def log_decision(agent_name: str, model_tier: str, approx_tokens: int):
+def log_decision(agent_name: str, model_tier: str, approx_tokens: int, used_fallback: bool = False):
     """Call this after every agent decision, including rule-based ones (approx_tokens=0)."""
     _ensure_log_header()
     cost = (approx_tokens / 1_000_000) * COST_PER_1M_TOKENS_INR.get(model_tier, 0)
+    source = "fallback" if used_fallback else "live"
     with open(COST_LOG_PATH, "a", newline="") as f:
-        csv.writer(f).writerow([time.time(), agent_name, model_tier, approx_tokens, round(cost, 4)])
+        csv.writer(f).writerow([time.time(), agent_name, model_tier, approx_tokens, round(cost, 4), source])
 
 
 def _generate_mock_fallback(prompt: str) -> str:
@@ -103,14 +104,15 @@ def _generate_mock_fallback(prompt: str) -> str:
     return "I can share the general terms, but final approval and exact numbers need to be confirmed through the official KYC/credit process."
 
 
-def call_gemini(prompt: str, model_tier: str = "gemini-flash") -> str:
+def call_gemini(prompt: str, model_tier: str = "gemini-flash") -> tuple[str, bool]:
     """
     Calls the Gemini API using the google-generativeai SDK.
     Falls back to a local deterministic mock generator if quota limits are exceeded.
+    Returns a tuple: (response_text, used_fallback)
     """
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        return _generate_mock_fallback(prompt)
+        return _generate_mock_fallback(prompt), True
 
     genai.configure(api_key=api_key)
     
@@ -120,7 +122,7 @@ def call_gemini(prompt: str, model_tier: str = "gemini-flash") -> str:
     
     try:
         response = model.generate_content(prompt)
-        return response.text
+        return response.text, False
     except Exception as e:
         # Fall back gracefully on ResourceExhausted or other API errors
-        return _generate_mock_fallback(prompt)
+        return _generate_mock_fallback(prompt), True
