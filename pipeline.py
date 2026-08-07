@@ -18,18 +18,6 @@ TRANSCRIPTS_PATH = Path(__file__).resolve().parent / "data" / "transcripts.json"
 DASHBOARD_FEED_PATH = Path(__file__).resolve().parent / "dashboard" / "live_feed.json"
 
 
-def append_to_feed(data: dict):
-    DASHBOARD_FEED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    feed = []
-    if DASHBOARD_FEED_PATH.exists():
-        try:
-            feed = json.loads(DASHBOARD_FEED_PATH.read_text())
-        except Exception:
-            feed = []
-    feed.append(data)
-    DASHBOARD_FEED_PATH.write_text(json.dumps(feed, indent=2))
-
-
 def run_transcript(transcript_obj: dict):
     customer_id = transcript_obj["customer_id"]
     turns = transcript_obj["turns"]
@@ -37,13 +25,14 @@ def run_transcript(transcript_obj: dict):
 
     seen_turns = []
     last_intent = None
+    transcript_feed = []  # List to collect turn dictionaries during this transcript iteration
 
     for turn in turns:
         seen_turns.append(turn)
         
         # Log agent turns in dashboard too
         if turn["speaker"] != "customer":
-            append_to_feed({
+            transcript_feed.append({
                 "customer_id": customer_id,
                 "type": "turn",
                 "speaker": turn["speaker"],
@@ -79,8 +68,8 @@ def run_transcript(transcript_obj: dict):
         else:
             final_suggestion = safe_suggestion
 
-        # Log customer turn details to live feed
-        append_to_feed({
+        # Log customer turn details to live feed list
+        transcript_feed.append({
             "customer_id": customer_id,
             "type": "turn",
             "speaker": turn["speaker"],
@@ -97,22 +86,39 @@ def run_transcript(transcript_obj: dict):
 
     # 6. CRM update at end of call
     crm_agent.update_crm(customer_id, outcome, notes=f"last_intent={last_intent}")
-    append_to_feed({
+    crm_data = {
         "customer_id": customer_id,
         "type": "crm",
         "outcome": outcome,
         "notes": f"last_intent={last_intent}"
-    })
+    }
 
     # 7. Follow-up if drop-off
+    followup_data = None
     if outcome == "drop-off":
         followup_text = followup_agent.draft_followup(seen_turns, reason=last_intent or "unknown")
         print(f"[{customer_id}] follow-up drafted: {followup_text}")
-        append_to_feed({
+        followup_data = {
             "customer_id": customer_id,
             "type": "followup",
             "text": followup_text
-        })
+        }
+
+    # Overwrite live_feed.json with updated accumulated list on transcript completion
+    DASHBOARD_FEED_PATH.parent.mkdir(parents=True, exist_ok=True)
+    feed = []
+    if DASHBOARD_FEED_PATH.exists():
+        try:
+            feed = json.loads(DASHBOARD_FEED_PATH.read_text())
+        except Exception:
+            feed = []
+            
+    feed.extend(transcript_feed)
+    feed.append(crm_data)
+    if followup_data:
+        feed.append(followup_data)
+        
+    DASHBOARD_FEED_PATH.write_text(json.dumps(feed, indent=2))
 
 
 def main():
