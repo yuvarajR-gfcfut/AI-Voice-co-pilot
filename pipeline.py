@@ -18,6 +18,18 @@ TRANSCRIPTS_PATH = Path(__file__).resolve().parent / "data" / "transcripts.json"
 DASHBOARD_FEED_PATH = Path(__file__).resolve().parent / "dashboard" / "live_feed.json"
 
 
+def append_to_feed(data: dict):
+    DASHBOARD_FEED_PATH.parent.mkdir(parents=True, exist_ok=True)
+    feed = []
+    if DASHBOARD_FEED_PATH.exists():
+        try:
+            feed = json.loads(DASHBOARD_FEED_PATH.read_text())
+        except Exception:
+            feed = []
+    feed.append(data)
+    DASHBOARD_FEED_PATH.write_text(json.dumps(feed, indent=2))
+
+
 def run_transcript(transcript_obj: dict):
     customer_id = transcript_obj["customer_id"]
     turns = transcript_obj["turns"]
@@ -28,7 +40,22 @@ def run_transcript(transcript_obj: dict):
 
     for turn in turns:
         seen_turns.append(turn)
+        
+        # Log agent turns in dashboard too
         if turn["speaker"] != "customer":
+            append_to_feed({
+                "customer_id": customer_id,
+                "type": "turn",
+                "speaker": turn["speaker"],
+                "text": turn["text"],
+                "intent": None,
+                "kb_fact": None,
+                "suggestion": None,
+                "passed_guardrail": None,
+                "passed_selfcheck": None,
+                "selfcheck_reason": None,
+                "final_suggestion": None
+            })
             continue
 
         # 1. Intent
@@ -44,27 +71,58 @@ def run_transcript(transcript_obj: dict):
         passed_guardrail, safe_suggestion = guardrail.check(suggestion)
 
         # 5. Self-check (only bother if guardrail already passed)
+        passed_selfcheck = False
+        reason = ""
         if passed_guardrail:
             passed_selfcheck, reason = selfcheck_agent.review(safe_suggestion, kb_fact)
             final_suggestion = safe_suggestion if passed_selfcheck else guardrail.SAFE_FALLBACK
         else:
             final_suggestion = safe_suggestion
 
-        # TODO: append {intent, kb_fact, suggestion} to a list and write to
-        # DASHBOARD_FEED_PATH as JSON so dashboard/index.html can show it live.
+        # Log customer turn details to live feed
+        append_to_feed({
+            "customer_id": customer_id,
+            "type": "turn",
+            "speaker": turn["speaker"],
+            "text": turn["text"],
+            "intent": last_intent,
+            "kb_fact": kb_fact,
+            "suggestion": suggestion,
+            "passed_guardrail": passed_guardrail,
+            "passed_selfcheck": passed_selfcheck if passed_guardrail else False,
+            "selfcheck_reason": reason,
+            "final_suggestion": final_suggestion
+        })
         print(f"[{customer_id}] intent={last_intent} -> suggestion: {final_suggestion}")
 
     # 6. CRM update at end of call
     crm_agent.update_crm(customer_id, outcome, notes=f"last_intent={last_intent}")
+    append_to_feed({
+        "customer_id": customer_id,
+        "type": "crm",
+        "outcome": outcome,
+        "notes": f"last_intent={last_intent}"
+    })
 
     # 7. Follow-up if drop-off
     if outcome == "drop-off":
         followup_text = followup_agent.draft_followup(seen_turns, reason=last_intent or "unknown")
         print(f"[{customer_id}] follow-up drafted: {followup_text}")
+        append_to_feed({
+            "customer_id": customer_id,
+            "type": "followup",
+            "text": followup_text
+        })
 
 
 def main():
-    # TODO: call retrieval.build_index() once here before the loop.
+    # Call retrieval.build_index() once here before the loop.
+    retrieval.build_index()
+    
+    # Initialize live feed file as empty array
+    DASHBOARD_FEED_PATH.parent.mkdir(parents=True, exist_ok=True)
+    DASHBOARD_FEED_PATH.write_text("[]")
+    
     transcripts = json.loads(TRANSCRIPTS_PATH.read_text())
     for t in transcripts:
         run_transcript(t)

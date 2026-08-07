@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Co-Pilot - Pay-in-3 Zero-Cost EMI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-microchip-ai logo-icon"></i>
+                <div class="brand-text">
+                    <h1>Co-Pilot</h1>
+                    <span>Agent Assist System</span>
+                </div>
+            </div>
+            
+            <div class="session-section">
+                <h2>Active Sessions</h2>
+                <ul id="session-list" class="session-list">
+                    <!-- Dynamic session items -->
+                </ul>
+            </div>
+            
+            <div class="system-status">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>System Online</span>
+                </div>
+                <button id="refresh-btn" class="btn-icon"><i class="fa-solid fa-arrows-rotate"></i> Reload Feed</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Dashboard Stats -->
+            <header class="dashboard-header">
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fa-solid fa-phone-volume"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Calls</h3>
+                        <p id="stat-total-calls">-</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="stat-info">
+                        <h3>Conversion Rate</h3>
+                        <p id="stat-conversion">-</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                    <div class="stat-info">
+                        <h3>Co-Pilot cost</h3>
+                        <p id="stat-total-cost">-</p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="workspace-grid">
+                <!-- Conversation Column -->
+                <section class="workspace-panel conversation-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-comments"></i> Live Transcript</h2>
+                        <span id="active-customer-badge" class="badge">No Call Selected</span>
+                    </div>
+                    <div id="transcript-feed" class="transcript-feed">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-microphone-slash"></i>
+                            <p>Select a call session from the sidebar to view transcript</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Co-pilot suggestions Column -->
+                <section class="workspace-panel copilot-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-wand-magic-sparkles"></i> AI Co-Pilot Recommendation</h2>
+                    </div>
+                    
+                    <div id="copilot-container" class="copilot-container hidden">
+                        <!-- Recommendation card -->
+                        <div class="suggestion-card">
+                            <div class="card-section">
+                                <span class="section-label">RECOMMENDED AGENT RESPONSE</span>
+                                <div class="suggestion-bubble">
+                                    <p id="copilot-suggestion">...</p>
+                                    <button id="copy-btn" class="btn-copy"><i class="fa-regular fa-copy"></i> Copy</button>
+                                </div>
+                            </div>
+                            
+                            <div class="card-section">
+                                <span class="section-label">DECISION COMPLIANCE METRICS</span>
+                                <div class="audit-grid">
+                                    <div class="audit-item" id="audit-guardrail">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <div>
+                                            <h4>Guardrails</h4>
+                                            <p class="status">Checking...</p>
+                                        </div>
+                                    </div>
+                                    <div class="audit-item" id="audit-selfcheck">
+                                        <i class="fa-solid fa-square-check"></i>
+                                        <div>
+                                            <h4>Self-Check</h4>
+                                            <p class="status">Checking...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-section">
+                                <span class="section-label">INTENT CLASSIFICATION</span>
+                                <div class="intent-badge-container">
+                                    <span id="copilot-intent" class="intent-badge">Unknown</span>
+                                </div>
+                            </div>
+
+                            <div class="card-section">
+                                <span class="section-label">GROUNDED FACTS (RAG RETRIEVAL)</span>
+                                <div class="rag-fact-box">
+                                    <i class="fa-solid fa-database fact-icon"></i>
+                                    <p id="copilot-fact">...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Post-Call CRM & Followup -->
+                        <div id="post-call-card" class="post-call-card hidden">
+                            <div class="card-section border-top">
+                                <span class="section-label">POST-CALL CRM SUMMARY</span>
+                                <div class="crm-summary-box">
+                                    <div class="crm-item">
+                                        <span class="label">Outcome:</span>
+                                        <span id="crm-outcome" class="badge">Pending</span>
+                                    </div>
+                                    <div class="crm-item">
+                                        <span class="label">CRM Notes (PII Masked):</span>
+                                        <p id="crm-notes">...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="followup-section" class="card-section hidden">
+                                <span class="section-label">FOLLOW-UP MESSAGE DRAFT</span>
+                                <div class="followup-draft-box">
+                                    <p id="followup-text">...</p>
+                                    <button id="copy-followup-btn" class="btn-copy"><i class="fa-regular fa-copy"></i> Copy Draft</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="copilot-empty" class="empty-state">
+                        <i class="fa-solid fa-brain-circuit"></i>
+                        <p>No active co-pilot recommendations. Select a customer turn in the transcript to view compliance audit & grounding data.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">Copied to clipboard!</div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -28,9 +28,9 @@ def build_index():
     client = chromadb.Client()
     # EphemeralClient is also Client() by default. Let's create collection.
     try:
-        collection = client.get_collection("kb")
+        collection = client.get_collection("knowledge_base")
     except Exception:
-        collection = client.create_collection("kb")
+        collection = client.create_collection("knowledge_base")
         
     chunks = load_kb_chunks()
     collection.add(
