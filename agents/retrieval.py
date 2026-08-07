@@ -20,26 +20,33 @@ def load_kb_chunks() -> list[str]:
     return [c for c in chunks if c]
 
 
-def build_index():
-    """
-    TODO: embed each chunk and store in Chroma. e.g.:
+import chromadb
 
-        import chromadb
-        client = chromadb.Client()
+def build_index():
+    """Build the index by chunking kb.md and adding it to an ephemeral Chroma collection."""
+    global _collection
+    client = chromadb.Client()
+    # EphemeralClient is also Client() by default. Let's create collection.
+    try:
+        collection = client.get_collection("kb")
+    except Exception:
         collection = client.create_collection("kb")
-        chunks = load_kb_chunks()
-        collection.add(documents=chunks, ids=[str(i) for i in range(len(chunks))])
-        global _collection
-        _collection = collection
-    """
-    raise NotImplementedError("Build the Chroma index here.")
+        
+    chunks = load_kb_chunks()
+    collection.add(
+        documents=chunks,
+        ids=[str(i) for i in range(len(chunks))]
+    )
+    _collection = collection
 
 
 def retrieve(query: str, top_k: int = 1) -> str:
-    """
-    TODO: query the Chroma collection and return the top fact(s) as a single string.
-
-        results = _collection.query(query_texts=[query], n_results=top_k)
+    """Query ChromaDB and return the most relevant KB fact(s) as a single string."""
+    global _collection
+    if _collection is None:
+        build_index()
+    
+    results = _collection.query(query_texts=[query], n_results=top_k)
+    if results and "documents" in results and results["documents"]:
         return " ".join(results["documents"][0])
-    """
-    raise NotImplementedError("Wire up the Chroma query here.")
+    return ""
