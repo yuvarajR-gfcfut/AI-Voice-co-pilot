@@ -1,0 +1,14 @@
+# Environment & Secrets
+.env
+
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Temporary and ChromaDB database files
+.chroma/
+
+# Output files and live logs
+outputs/cost_log.csv
+outputs/crm.csv
+dashboard/live_feed.json
