@@ -10,7 +10,14 @@ the interview. Everything below is a working skeleton; fill in the TODOs.
 """
 
 import json
+import sys
 from pathlib import Path
+
+# Ensure standard output can print UTF-8 characters (like ₹) on Windows without crashing
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except AttributeError:
+    pass
 
 from agents import retrieval, intent_agent, action_agent, guardrail, selfcheck_agent, crm_agent, followup_agent
 
@@ -20,15 +27,16 @@ DASHBOARD_FEED_PATH = Path(__file__).resolve().parent / "dashboard" / "live_feed
 
 def run_transcript(transcript_obj: dict):
     # Dynamically adapt new transcripts JSON format to internal pipeline structure
-    customer_id = transcript_obj["call_id"]
-    turns_raw = transcript_obj["transcript"]
-    outcome = "drop-off" if transcript_obj.get("outcome") == "drop_off" else "won"
+    customer_id = transcript_obj.get("customer_id") or transcript_obj.get("call_id")
+    turns_raw = transcript_obj.get("turns") or transcript_obj.get("transcript")
+    label_raw = transcript_obj.get("label") or transcript_obj.get("outcome")
+    outcome = "drop-off" if label_raw in ["drop-off", "drop_off"] else "won"
     
     turns = []
     for t in turns_raw:
         turns.append({
-            "speaker": "customer" if t["speaker"] == "prospect" else t["speaker"],
-            "text": t["message"]
+            "speaker": "customer" if t.get("speaker") in ["prospect", "customer"] else t.get("speaker"),
+            "text": t.get("text") or t.get("message")
         })
 
     seen_turns = []
@@ -117,7 +125,7 @@ def run_transcript(transcript_obj: dict):
     feed = []
     if DASHBOARD_FEED_PATH.exists():
         try:
-            feed = json.loads(DASHBOARD_FEED_PATH.read_text())
+            feed = json.loads(DASHBOARD_FEED_PATH.read_text(encoding="utf-8"))
         except Exception:
             feed = []
             
@@ -126,7 +134,7 @@ def run_transcript(transcript_obj: dict):
     if followup_data:
         feed.append(followup_data)
         
-    DASHBOARD_FEED_PATH.write_text(json.dumps(feed, indent=2))
+    DASHBOARD_FEED_PATH.write_text(json.dumps(feed, indent=2), encoding="utf-8")
 
 
 def main():
@@ -135,9 +143,10 @@ def main():
     
     # Initialize live feed file as empty array
     DASHBOARD_FEED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    DASHBOARD_FEED_PATH.write_text("[]")
+    DASHBOARD_FEED_PATH.write_text("[]", encoding="utf-8")
     
-    transcripts = json.loads(TRANSCRIPTS_PATH.read_text())["calls"]
+    transcripts_data = json.loads(TRANSCRIPTS_PATH.read_text(encoding="utf-8"))
+    transcripts = transcripts_data if isinstance(transcripts_data, list) else transcripts_data.get("calls", [])
     for t in transcripts:
         run_transcript(t)
 

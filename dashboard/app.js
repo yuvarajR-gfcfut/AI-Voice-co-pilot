@@ -2,27 +2,58 @@ let sessions = {};
 let selectedSessionId = null;
 let selectedTurnIndex = null;
 
+// Optimize polling: Track last rendered active session's state to prevent redundant DOM updates
+let lastRenderedSessionId = null;
+let lastRenderedTurnsCount = 0;
+let lastRenderedOutcome = null;
+
+// Track whether the user has manually scrolled up
+let isUserScrolledUp = false;
+
+// Alias main fetch function to support standard fetchLiveData call
+function fetchLiveData() {
+    fetchFeed();
+}
+
 // Initialize Dashboard
 document.addEventListener('DOMContentLoaded', () => {
     fetchFeed();
     // Poll every 2 seconds for live updates
     setInterval(fetchFeed, 2000);
-    
-    // Refresh button handler
-    document.getElementById('refresh-btn').addEventListener('click', () => {
-        fetchFeed();
-        showToast('Feed reloaded successfully!');
-    });
+
+    // Scroll event listener for live transcript
+    const container = document.getElementById('live-transcript-container');
+    if (container) {
+        container.addEventListener('scroll', () => {
+            const distanceFromBottom = container.scrollHeight - container.clientHeight - container.scrollTop;
+            isUserScrolledUp = distanceFromBottom > 60;
+        });
+    }
     
     // Copy buttons
-    document.getElementById('copy-btn').addEventListener('click', () => {
-        const text = document.getElementById('copilot-suggestion').innerText;
-        copyToClipboard(text);
-    });
-    
     document.getElementById('copy-followup-btn').addEventListener('click', () => {
         const text = document.getElementById('followup-text').innerText;
         copyToClipboard(text);
+    });
+
+    // Human Oversight click event listeners are handled via event delegation on document.body
+
+    // Session sidebar event delegation
+    const sessionList = document.getElementById('session-list');
+    sessionList.addEventListener('click', (event) => {
+        const item = event.target.closest('.session-item');
+        if (item) {
+            const sessionId = item.getAttribute('data-session-id');
+            selectedSessionId = sessionId;
+            selectedTurnIndex = null; // reset selected turn for AI panel
+            
+            // Remove active class from all items and add to the clicked item
+            document.querySelectorAll('.session-item').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Immediately fetch and render
+            updateTranscriptView(sessionId, true);
+        }
     });
 });
 
@@ -72,13 +103,14 @@ function processFeed(feedData) {
     
     updateSidebar();
     updateStats();
+    initAnalyticsCharts(sessions);
     
     // Select default or keep selected
     if (selectedSessionId && sessions[selectedSessionId]) {
-        updateTranscriptView(selectedSessionId);
+        updateTranscriptView(selectedSessionId, false);
     } else if (newSessionIds.length > 0) {
         selectedSessionId = newSessionIds[0];
-        updateTranscriptView(selectedSessionId);
+        updateTranscriptView(selectedSessionId, true);
     }
 }
 
@@ -90,6 +122,7 @@ function updateSidebar() {
         const s = sessions[id];
         const li = document.createElement('li');
         li.className = `session-item ${id === selectedSessionId ? 'active' : ''}`;
+        li.setAttribute('data-session-id', id); // Associate session ID with the DOM element for delegation
         
         let badgeClass = 'status-active';
         let badgeText = 'Active';
@@ -106,14 +139,6 @@ function updateSidebar() {
             <span class="session-name">${id}</span>
             <span class="badge ${badgeClass}">${badgeText}</span>
         `;
-        
-        li.addEventListener('click', () => {
-            selectedSessionId = id;
-            selectedTurnIndex = null; // reset selected turn for AI panel
-            document.querySelectorAll('.session-item').forEach(el => el.classList.remove('active'));
-            li.classList.add('active');
-            updateTranscriptView(id);
-        });
         
         list.appendChild(li);
     });
@@ -156,9 +181,31 @@ function updateStats() {
     document.getElementById('stat-total-cost').innerText = `₹${totalCost.toFixed(4)}`;
 }
 
-function updateTranscriptView(cid) {
+function updateTranscriptView(cid, forceScroll = false) {
     const s = sessions[cid];
-    const feed = document.getElementById('transcript-feed');
+    if (!s) return;
+
+    if (forceScroll) {
+        isUserScrolledUp = false;
+    }
+
+    const container = document.getElementById('live-transcript-container');
+    const feed = container;
+    
+    // Optimize: Only redraw the DOM if forced, active session changed, or turn count/outcome changed
+    const hasChanged = cid !== lastRenderedSessionId || 
+                       s.turns.length !== lastRenderedTurnsCount || 
+                       s.outcome !== lastRenderedOutcome;
+                       
+    if (!forceScroll && !hasChanged) {
+        // Redundant poll update, keep the DOM intact
+        return;
+    }
+    
+    lastRenderedSessionId = cid;
+    lastRenderedTurnsCount = s.turns.length;
+    lastRenderedOutcome = s.outcome;
+
     feed.innerHTML = '';
     
     document.getElementById('active-customer-badge').innerText = cid;
@@ -207,7 +254,9 @@ function updateTranscriptView(cid) {
     });
     
     // Auto-scroll transcript list to bottom
-    feed.scrollTop = feed.scrollHeight;
+    if (isUserScrolledUp === false) {
+        container.scrollTop = container.scrollHeight;
+    }
     
     // Automatically select the last customer turn's insight if none is selected
     if (selectedTurnIndex === null) {
@@ -262,7 +311,26 @@ function showCopilotInsight(turn) {
     emptyState.classList.add('hidden');
     container.classList.remove('hidden');
     
-    document.getElementById('copilot-suggestion').innerText = turn.final_suggestion;
+    const textarea = document.getElementById('recommendation-textarea');
+    if (textarea) {
+        textarea.value = turn.final_suggestion;
+        textarea.disabled = false;
+        textarea.removeAttribute('data-action-logged');
+    }
+    
+    // Reset compliance badge status
+    updateComplianceBadge('Pending Review');
+    
+    const approveBtn = document.getElementById('approve-btn');
+    const overrideBtn = document.getElementById('override-btn');
+    const lockStatus = document.getElementById('lock-status');
+    const bubble = document.querySelector('.human-oversight-bubble');
+    
+    if (approveBtn) approveBtn.disabled = false;
+    if (overrideBtn) overrideBtn.disabled = false;
+    if (lockStatus) lockStatus.classList.add('hidden');
+    if (bubble) bubble.classList.remove('locked');
+
     document.getElementById('copilot-intent').innerText = turn.intent.replace('_', ' ').toUpperCase();
     document.getElementById('copilot-fact').innerText = turn.kb_fact || 'No grounding fact required.';
     
@@ -306,4 +374,239 @@ function showToast(message) {
     setTimeout(() => {
         toast.classList.add('hidden');
     }, 2500);
+}
+
+// Lock Human Oversight UI elements once actions are taken
+function lockOversightUI(actionType) {
+    const textarea = document.getElementById('recommendation-textarea');
+    const approveBtn = document.getElementById('approve-btn');
+    const overrideBtn = document.getElementById('override-btn');
+    const lockStatus = document.getElementById('lock-status');
+    const bubble = document.querySelector('.human-oversight-bubble');
+    
+    if (textarea) {
+        textarea.disabled = true;
+        textarea.setAttribute('data-action-logged', actionType);
+    }
+    if (approveBtn) approveBtn.disabled = true;
+    if (overrideBtn) overrideBtn.disabled = true;
+    if (lockStatus) lockStatus.classList.remove('hidden');
+    if (bubble) bubble.classList.add('locked');
+}
+
+// Append new entry to the Human Oversight Log audit trail
+function appendAuditEntry(status, text) {
+    const logContainer = document.getElementById('human-audit-log');
+    if (!logContainer) return;
+    
+    // Remove empty state if present
+    const emptyState = logContainer.querySelector('.log-empty-state');
+    if (emptyState) {
+        emptyState.remove();
+    }
+    
+    // Generate timestamp using toLocaleTimeString with custom 2-digit format
+    const timestamp = new Date().toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+    
+    // Create new div matching required tailwind structure class
+    const entryDiv = document.createElement('div');
+    entryDiv.className = 'text-xs p-2 mb-1 rounded bg-gray-800 border border-gray-700 flex justify-between items-center';
+    
+    // Apply green or orange badge styling based on approval/override state
+    const badgeClass = status === 'APPROVED' ? 'bg-green-900 text-green-300' : 'bg-amber-900 text-amber-300';
+    
+    entryDiv.innerHTML = `
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="badge ${badgeClass}" style="padding: 2px 6px; font-size: 10px;">${status}</span>
+            <span style="color: var(--text-primary); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 200px;">${text}</span>
+        </div>
+        <span style="color: var(--text-dark); font-size: 11px;">${timestamp}</span>
+    `;
+    
+    // Prepend entry to top of the log container
+    logContainer.insertBefore(entryDiv, logContainer.firstChild);
+}
+
+// Update the compliance status badge element
+function updateComplianceBadge(status) {
+    const badge = document.getElementById('compliance-badge');
+    if (badge) {
+        badge.innerText = status;
+        badge.className = `badge status-${status.toLowerCase().replace(' ', '-')}`;
+    }
+}
+
+// Single delegated click event listener attached to document.body
+document.body.addEventListener('click', (e) => {
+    const approveBtn = e.target.closest('#approve-btn');
+    const overrideBtn = e.target.closest('#override-btn');
+    const reloadBtn = e.target.closest('#reload-feed-btn');
+    
+    if (approveBtn) {
+        e.preventDefault();
+        const textarea = document.getElementById('recommendation-textarea');
+        const text = textarea ? textarea.value : '';
+        
+        appendAuditEntry('APPROVED', text);
+        showToast('AI Recommendation Approved & Sent');
+        updateComplianceBadge('Human Verified');
+        lockOversightUI('Approved');
+    }
+    
+    if (overrideBtn) {
+        e.preventDefault();
+        const textarea = document.getElementById('recommendation-textarea');
+        const text = textarea ? textarea.value : '';
+        
+        appendAuditEntry('OVERRIDDEN', text);
+        showToast('Custom Response Sent (Human Override)');
+        updateComplianceBadge('Human Overridden');
+        lockOversightUI('Overridden');
+    }
+
+    if (reloadBtn) {
+        e.preventDefault();
+        fetchLiveData();
+        showToast('Feed refreshed successfully');
+    }
+});
+
+// Chart instances for visual analytics
+let outcomeChartInstance = null;
+let intentChartInstance = null;
+
+// Initialize and dynamically update the doughnut and bar charts
+function initAnalyticsCharts(sessionsData) {
+    let wonCount = 0;
+    let dropOffCount = 0;
+    
+    Object.values(sessionsData).forEach(s => {
+        if (s.outcome === 'won') wonCount++;
+        else if (s.outcome === 'drop-off') dropOffCount++;
+    });
+
+    let intentCounts = {
+        'Pricing': 0,
+        'Credit Score': 0,
+        'KYC': 0,
+        'Eligibility': 0,
+        'Objections': 0
+    };
+    
+    Object.values(sessionsData).forEach(s => {
+        s.turns.forEach(turn => {
+            if (turn.speaker === 'customer' && turn.intent) {
+                const intent = turn.intent.toLowerCase();
+                if (intent.includes('pricing') || intent.includes('price')) {
+                    intentCounts['Pricing']++;
+                } else if (intent.includes('credit') || intent.includes('score') || intent.includes('cibil')) {
+                    intentCounts['Credit Score']++;
+                } else if (intent.includes('kyc') || intent.includes('document') || intent.includes('verify') || intent.includes('pan') || intent.includes('aadhaar')) {
+                    intentCounts['KYC']++;
+                } else if (intent.includes('eligibility') || intent.includes('age') || intent.includes('income')) {
+                    intentCounts['Eligibility']++;
+                } else {
+                    intentCounts['Objections']++;
+                }
+            }
+        });
+    });
+
+    const textMuted = '#94a3b8';
+    const borderDark = 'rgba(255, 255, 255, 0.08)';
+
+    // Outcomes Doughnut Chart
+    const ctxOutcome = document.getElementById('outcomeChart');
+    if (ctxOutcome) {
+        if (outcomeChartInstance) {
+            outcomeChartInstance.destroy();
+        }
+        outcomeChartInstance = new Chart(ctxOutcome, {
+            type: 'doughnut',
+            data: {
+                labels: ['Won', 'Drop-Off'],
+                datasets: [{
+                    data: [wonCount, dropOffCount],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.65)',
+                        'rgba(239, 68, 68, 0.65)'
+                    ],
+                    borderColor: [
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(239, 68, 68, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            color: textMuted,
+                            font: { family: 'Plus Jakarta Sans', size: 11 }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Customer Intent Bar Chart
+    const ctxIntent = document.getElementById('intentChart');
+    if (ctxIntent) {
+        if (intentChartInstance) {
+            intentChartInstance.destroy();
+        }
+        intentChartInstance = new Chart(ctxIntent, {
+            type: 'bar',
+            data: {
+                labels: ['Pricing', 'Credit Score', 'KYC', 'Eligibility', 'Objections'],
+                datasets: [{
+                    label: 'Intent distribution',
+                    data: [
+                        intentCounts['Pricing'],
+                        intentCounts['Credit Score'],
+                        intentCounts['KYC'],
+                        intentCounts['Eligibility'],
+                        intentCounts['Objections']
+                    ],
+                    backgroundColor: 'rgba(99, 102, 241, 0.65)',
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: borderDark },
+                        ticks: {
+                            color: textMuted,
+                            font: { family: 'Plus Jakarta Sans', size: 10 }
+                        }
+                    },
+                    y: {
+                        grid: { color: borderDark },
+                        beginAtZero: true,
+                        ticks: {
+                            color: textMuted,
+                            precision: 0,
+                            font: { family: 'Plus Jakarta Sans', size: 10 }
+                        }
+                    }
+                }
+            }
+        });
+    }
 }

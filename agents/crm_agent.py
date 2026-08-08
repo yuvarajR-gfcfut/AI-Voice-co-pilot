@@ -14,11 +14,11 @@ CRM_PATH = Path(__file__).resolve().parent.parent / "outputs" / "crm.csv"
 
 def _ensure_header():
     if not CRM_PATH.exists():
-        with open(CRM_PATH, "w", newline="") as f:
+        with open(CRM_PATH, "w", newline="", encoding="utf-8") as f:
             csv.writer(f).writerow(["timestamp", "customer_id", "outcome", "notes"])
 
 
 def update_crm(customer_id: str, outcome: str, notes: str):
     _ensure_header()
-    with open(CRM_PATH, "a", newline="") as f:
+    with open(CRM_PATH, "a", newline="", encoding="utf-8") as f:
         csv.writer(f).writerow([time.time(), customer_id, outcome, mask_pii(notes)])

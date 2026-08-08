@@ -28,7 +28,7 @@ COST_LOG_PATH = Path(__file__).resolve().parent.parent / "outputs" / "cost_log.c
 
 def _ensure_log_header():
     if not COST_LOG_PATH.exists():
-        with open(COST_LOG_PATH, "w", newline="") as f:
+        with open(COST_LOG_PATH, "w", newline="", encoding="utf-8") as f:
             csv.writer(f).writerow(
                 ["timestamp", "agent", "model_tier", "approx_tokens", "approx_cost_inr", "source"]
             )
@@ -39,7 +39,7 @@ def log_decision(agent_name: str, model_tier: str, approx_tokens: int, used_fall
     _ensure_log_header()
     cost = (approx_tokens / 1_000_000) * COST_PER_1M_TOKENS_INR.get(model_tier, 0)
     source = "fallback" if used_fallback else "live"
-    with open(COST_LOG_PATH, "a", newline="") as f:
+    with open(COST_LOG_PATH, "a", newline="", encoding="utf-8") as f:
         csv.writer(f).writerow([time.time(), agent_name, model_tier, approx_tokens, round(cost, 4), source])
 
 

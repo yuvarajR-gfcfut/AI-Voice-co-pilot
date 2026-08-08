@@ -15,7 +15,7 @@ _collection = None  # Chroma collection, set up in build_index()
 
 def load_kb_chunks() -> list[str]:
     """Split kb.md into bullet-point chunks."""
-    text = KB_PATH.read_text()
+    text = KB_PATH.read_text(encoding="utf-8")
     chunks = [line.strip("-* \n") for line in text.splitlines() if line.strip().startswith(("-", "*"))]
     return [c for c in chunks if c]
 

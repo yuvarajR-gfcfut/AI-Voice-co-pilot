@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="style.css">
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Visual Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -35,7 +37,7 @@
                     <span class="pulse-dot"></span>
                     <span>System Online</span>
                 </div>
-                <button id="refresh-btn" class="btn-icon"><i class="fa-solid fa-arrows-rotate"></i> Reload Feed</button>
+                <button id="reload-feed-btn" class="btn-icon"><i class="fa-solid fa-arrows-rotate"></i> Reload Feed</button>
             </div>
         </aside>
 
@@ -66,6 +68,18 @@
                 </div>
             </header>
 
+            <!-- Visual Analytics Charts Row -->
+            <div class="grid md:grid-cols-2 gap-4 mb-6" style="display: grid;">
+              <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
+                <h3 class="text-sm font-semibold text-gray-400 mb-2">Call Outcomes Breakdown</h3>
+                <div class="h-48"><canvas id="outcomeChart"></canvas></div>
+              </div>
+              <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
+                <h3 class="text-sm font-semibold text-gray-400 mb-2">Customer Intent Distribution</h3>
+                <div class="h-48"><canvas id="intentChart"></canvas></div>
+              </div>
+            </div>
+
             <div class="workspace-grid">
                 <!-- Conversation Column -->
                 <section class="workspace-panel conversation-panel">
@@ -73,7 +87,7 @@
                         <h2><i class="fa-solid fa-comments"></i> Live Transcript</h2>
                         <span id="active-customer-badge" class="badge">No Call Selected</span>
                     </div>
-                    <div id="transcript-feed" class="transcript-feed">
+                    <div id="live-transcript-container" class="transcript-feed">
                         <div class="empty-state">
                             <i class="fa-solid fa-microphone-slash"></i>
                             <p>Select a call session from the sidebar to view transcript</p>
@@ -91,10 +105,20 @@
                         <!-- Recommendation card -->
                         <div class="suggestion-card">
                             <div class="card-section">
-                                <span class="section-label">RECOMMENDED AGENT RESPONSE</span>
-                                <div class="suggestion-bubble">
-                                    <p id="copilot-suggestion">...</p>
-                                    <button id="copy-btn" class="btn-copy"><i class="fa-regular fa-copy"></i> Copy</button>
+                                <span class="section-label">RECOMMENDED AGENT RESPONSE (HUMAN OVERSIGHT)</span>
+                                <div class="suggestion-bubble human-oversight-bubble">
+                                    <textarea id="recommendation-textarea" class="copilot-textarea" placeholder="Waiting for AI suggestion..."></textarea>
+                                    <div class="oversight-actions">
+                                        <button id="approve-btn" class="btn-action btn-approve">
+                                            <i class="fa-solid fa-circle-check"></i> Approve & Send
+                                        </button>
+                                        <button id="override-btn" class="btn-action btn-override">
+                                            <i class="fa-solid fa-circle-exclamation"></i> Override & Send
+                                        </button>
+                                    </div>
+                                    <div id="lock-status" class="lock-indicator hidden">
+                                        <i class="fa-solid fa-lock"></i> Action Logged for Compliance
+                                    </div>
                                 </div>
                             </div>
                             
@@ -115,6 +139,20 @@
                                             <p class="status">Checking...</p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="card-section">
+                                <span class="section-label">COMPLIANCE STATUS</span>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <span id="compliance-badge" class="badge status-active">Pending Review</span>
+                                </div>
+                            </div>
+
+                            <div class="card-section">
+                                <span class="section-label">HUMAN OVERSIGHT LOG</span>
+                                <div id="human-audit-log" class="oversight-log-container">
+                                    <div class="log-empty-state">No actions logged yet.</div>
                                 </div>
                             </div>
 
