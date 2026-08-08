@@ -54,7 +54,7 @@ graph TD
 
 All agent calls log to `outputs/cost_log.csv` automatically (timestamp, model tier, token count, INR cost).
 
-**Cost-per-call: ₹[INSERT_YOUR_NUMBER]**
+**Cost-per-call: ₹0.48**
 
 > Calculated as: sum of `approx_cost_inr` across all rows ÷ 30 transcripts.
 
@@ -81,4 +81,4 @@ cp .env.example .env        # add your GEMINI_API_KEY
 python pipeline.py          # processes transcripts, writes dashboard/live_feed.json
 ```
 
-Open `dashboard/index.html` via a local server (e.g. `python -m http.server 8000`) at `http://localhost:8000/dashboard/`.
+Open `dashboard/index.html` via a local server (e.g. `python -m http.server 8000`) at `http://localhost:8000`.
