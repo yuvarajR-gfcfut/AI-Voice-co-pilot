@@ -35,7 +35,7 @@
   },
   {
     "customer_id": "CALL_002",
-    "label": "won",
+    "label": "drop-off",
     "turns": [
       {
         "speaker": "agent",
@@ -43,27 +43,27 @@
       },
       {
         "speaker": "customer",
-        "text": "Hello, I want to understand the exact repayment timeline for the pay-in-3 plan."
+        "text": "Hi, is it true there are no interest charges on the pay-in-3 zero-cost EMI plan?"
       },
       {
         "speaker": "agent",
-        "text": "The repayment is split into three equal installments. The first is paid instantly at checkout, the second on Day 30, and the third on Day 60."
+        "text": "Yes, that's correct. The plan has 0% interest and ₹0 processing fees."
       },
       {
         "speaker": "customer",
-        "text": "What happens if my salary is delayed and I miss the Day 30 payment?"
+        "text": "I'm still skeptical. Usually, there are hidden membership fees or setup charges. What's the catch?"
       },
       {
         "speaker": "agent",
-        "text": "We offer a 3-day grace window. If payment is delayed beyond that, a late fee of 3% per month is charged only on the overdue amount, capped at Rs. 500."
+        "text": "There are no setup or membership fees, but if you miss payments, standard penalty fees apply."
       },
       {
         "speaker": "customer",
-        "text": "Capped at Rs. 500 is reasonable. I will make sure my balance is maintained. Let's proceed."
+        "text": "Ah, that is a catch. I don't want to get trapped in late fees. I will pass on this purchase for now."
       },
       {
         "speaker": "agent",
-        "text": "Perfect choice. We also send reminders 3 days before any auto-debit so you can manage your bank balance."
+        "text": "I understand your concern. You're welcome to check out standard payment methods on our site. Thank you!"
       }
     ]
   },
@@ -77,27 +77,27 @@
       },
       {
         "speaker": "customer",
-        "text": "Hi, what documentation is required to complete the digital KYC process?"
+        "text": "Hello, I want to understand the exact repayment timeline for the pay-in-3 plan."
       },
       {
         "speaker": "agent",
-        "text": "You will need a valid PAN card, Aadhaar linked to your mobile for OTP verification, and a 3-month bank statement PDF."
+        "text": "The repayment is split into three equal installments. The first is paid instantly at checkout, the second on Day 30, and the third on Day 60."
       },
       {
         "speaker": "customer",
-        "text": "Can I upload the bank statement manually or do I have to log in via net banking?"
+        "text": "What happens if my salary is delayed and I miss the Day 30 payment?"
       },
       {
         "speaker": "agent",
-        "text": "Either works! You can securely upload the PDF statement or use net banking login to verify monthly income instantly."
+        "text": "We offer a 3-day grace window. If payment is delayed beyond that, a late fee of 3% per month is charged only on the overdue amount, capped at Rs. 500."
       },
       {
         "speaker": "customer",
-        "text": "Okay, I have my PDF bank statement ready and my Aadhaar linked mobile is with me. Let's do it."
+        "text": "Capped at Rs. 500 is reasonable. I will make sure my balance is maintained. Let's proceed."
       },
       {
         "speaker": "agent",
-        "text": "Great! Let's get the digital verification links sent to your mobile number now."
+        "text": "Perfect choice. We also send reminders 3 days before any auto-debit so you can manage your bank balance."
       }
     ]
   },
@@ -111,108 +111,6 @@
       },
       {
         "speaker": "customer",
-        "text": "Hello, I see that you check credit score. Will this soft check impact my CIBIL score?"
-      },
-      {
-        "speaker": "agent",
-        "text": "No, the initial check is a soft inquiry. It will appear on your history but has 0% impact on your credit score."
-      },
-      {
-        "speaker": "customer",
-        "text": "That's good. What is the minimum score required to be eligible?"
-      },
-      {
-        "speaker": "agent",
-        "text": "We require a minimum CIBIL score of 650, with no defaults or active settlements in the last 24 months."
-      },
-      {
-        "speaker": "customer",
-        "text": "My score is 710, and I have never defaulted. I should be eligible, right?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Yes, you meet the criteria perfectly. Let's proceed to enter your details and run the check."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_005",
-    "label": "won",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "Hi, I am interested in buying a television. What are the terms for the zero-cost EMI option?"
-      },
-      {
-        "speaker": "agent",
-        "text": "It's structured so that there is no interest charged. The merchant covers the financing costs entirely, meaning you pay exactly the product price."
-      },
-      {
-        "speaker": "customer",
-        "text": "Are there any hidden fees or processing charges at checkout?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Absolutely not. The processing fee is flat ₹0. You pay only the sticker price of the television."
-      },
-      {
-        "speaker": "customer",
-        "text": "That sounds perfect. How do we start the application?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Excellent! I can guide you through the process right now. Let's begin the digital verification."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_006",
-    "label": "won",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "Hello, I want to understand the exact repayment timeline for the pay-in-3 plan."
-      },
-      {
-        "speaker": "agent",
-        "text": "The repayment is split into three equal installments. The first is paid instantly at checkout, the second on Day 30, and the third on Day 60."
-      },
-      {
-        "speaker": "customer",
-        "text": "What happens if my salary is delayed and I miss the Day 30 payment?"
-      },
-      {
-        "speaker": "agent",
-        "text": "We offer a 3-day grace window. If payment is delayed beyond that, a late fee of 3% per month is charged only on the overdue amount, capped at Rs. 500."
-      },
-      {
-        "speaker": "customer",
-        "text": "Capped at Rs. 500 is reasonable. I will make sure my balance is maintained. Let's proceed."
-      },
-      {
-        "speaker": "agent",
-        "text": "Perfect choice. We also send reminders 3 days before any auto-debit so you can manage your bank balance."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_007",
-    "label": "won",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
         "text": "Hi, what documentation is required to complete the digital KYC process?"
       },
       {
@@ -238,7 +136,41 @@
     ]
   },
   {
-    "customer_id": "CALL_008",
+    "customer_id": "CALL_005",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Could you tell me what the penalty is if I miss an EMI installment?"
+      },
+      {
+        "speaker": "agent",
+        "text": "A late payment fee of 3% per month is applied on the outstanding overdue amount, capped at Rs. 500, and it is reported to credit bureaus."
+      },
+      {
+        "speaker": "customer",
+        "text": "Wait, it gets reported to the credit bureau even for a minor delay?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Yes, any payment delay must legally be reported to credit bureaus like CIBIL. It's a standard regulatory requirement."
+      },
+      {
+        "speaker": "customer",
+        "text": "No, I am trying to build my credit score and cannot risk any negative reports. I don't want to buy this way."
+      },
+      {
+        "speaker": "agent",
+        "text": "I understand your concern, but timely repayments actually improve your score. Let me know if you change your mind."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_006",
     "label": "won",
     "turns": [
       {
@@ -272,7 +204,7 @@
     ]
   },
   {
-    "customer_id": "CALL_009",
+    "customer_id": "CALL_007",
     "label": "won",
     "turns": [
       {
@@ -306,7 +238,41 @@
     ]
   },
   {
-    "customer_id": "CALL_010",
+    "customer_id": "CALL_008",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "I am trying to complete the checkout verification, but my Aadhaar is linked to my parent's mobile number."
+      },
+      {
+        "speaker": "agent",
+        "text": "The Aadhaar verification must be completed via OTP sent to the registered mobile number for e-KYC compliance."
+      },
+      {
+        "speaker": "customer",
+        "text": "My parents are traveling and I won't have access to their phone. Can we do Aadhaar verification with email?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Unfortunately, email verification is not supported. It must be OTP-based Aadhaar validation linked to your active mobile number."
+      },
+      {
+        "speaker": "customer",
+        "text": "Okay, that's not possible for me today. I'll just abandon the cart and buy later."
+      },
+      {
+        "speaker": "agent",
+        "text": "No worries. You can complete the purchase anytime once you have access to the registered device."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_009",
     "label": "won",
     "turns": [
       {
@@ -336,6 +302,40 @@
       {
         "speaker": "agent",
         "text": "Perfect choice. We also send reminders 3 days before any auto-debit so you can manage your bank balance."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_010",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Hi, I wanted to buy a tablet with pay-in-3, but my credit score is around 610. Can I still qualify?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Our eligibility criteria requires a minimum CIBIL credit score of 650 with no active defaults in the last 24 months."
+      },
+      {
+        "speaker": "customer",
+        "text": "Can we bypass this score check? I have a stable monthly income of ₹50,000."
+      },
+      {
+        "speaker": "agent",
+        "text": "The credit score check is automated and cannot be manually bypassed by agents. It's a strict risk filter."
+      },
+      {
+        "speaker": "customer",
+        "text": "That is disappointing. I have the income but not the score. I'll search for other alternatives."
+      },
+      {
+        "speaker": "agent",
+        "text": "We apologize for the inconvenience. Thank you for your time today."
       }
     ]
   },
@@ -409,6 +409,40 @@
   },
   {
     "customer_id": "CALL_013",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Hi, is it true there are no interest charges on the pay-in-3 zero-cost EMI plan?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Yes, that's correct. The plan has 0% interest and ₹0 processing fees."
+      },
+      {
+        "speaker": "customer",
+        "text": "I'm still skeptical. Usually, there are hidden membership fees or setup charges. What's the catch?"
+      },
+      {
+        "speaker": "agent",
+        "text": "There are no setup or membership fees, but if you miss payments, standard penalty fees apply."
+      },
+      {
+        "speaker": "customer",
+        "text": "Ah, that is a catch. I don't want to get trapped in late fees. I will pass on this purchase for now."
+      },
+      {
+        "speaker": "agent",
+        "text": "I understand your concern. You're welcome to check out standard payment methods on our site. Thank you!"
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_014",
     "label": "won",
     "turns": [
       {
@@ -442,7 +476,7 @@
     ]
   },
   {
-    "customer_id": "CALL_014",
+    "customer_id": "CALL_015",
     "label": "won",
     "turns": [
       {
@@ -476,7 +510,41 @@
     ]
   },
   {
-    "customer_id": "CALL_015",
+    "customer_id": "CALL_016",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Could you tell me what the penalty is if I miss an EMI installment?"
+      },
+      {
+        "speaker": "agent",
+        "text": "A late payment fee of 3% per month is applied on the outstanding overdue amount, capped at Rs. 500, and it is reported to credit bureaus."
+      },
+      {
+        "speaker": "customer",
+        "text": "Wait, it gets reported to the credit bureau even for a minor delay?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Yes, any payment delay must legally be reported to credit bureaus like CIBIL. It's a standard regulatory requirement."
+      },
+      {
+        "speaker": "customer",
+        "text": "No, I am trying to build my credit score and cannot risk any negative reports. I don't want to buy this way."
+      },
+      {
+        "speaker": "agent",
+        "text": "I understand your concern, but timely repayments actually improve your score. Let me know if you change your mind."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_017",
     "label": "won",
     "turns": [
       {
@@ -510,7 +578,41 @@
     ]
   },
   {
-    "customer_id": "CALL_016",
+    "customer_id": "CALL_018",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "I am trying to complete the checkout verification, but my Aadhaar is linked to my parent's mobile number."
+      },
+      {
+        "speaker": "agent",
+        "text": "The Aadhaar verification must be completed via OTP sent to the registered mobile number for e-KYC compliance."
+      },
+      {
+        "speaker": "customer",
+        "text": "My parents are traveling and I won't have access to their phone. Can we do Aadhaar verification with email?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Unfortunately, email verification is not supported. It must be OTP-based Aadhaar validation linked to your active mobile number."
+      },
+      {
+        "speaker": "customer",
+        "text": "Okay, that's not possible for me today. I'll just abandon the cart and buy later."
+      },
+      {
+        "speaker": "agent",
+        "text": "No worries. You can complete the purchase anytime once you have access to the registered device."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_019",
     "label": "won",
     "turns": [
       {
@@ -544,7 +646,7 @@
     ]
   },
   {
-    "customer_id": "CALL_017",
+    "customer_id": "CALL_020",
     "label": "won",
     "turns": [
       {
@@ -578,7 +680,41 @@
     ]
   },
   {
-    "customer_id": "CALL_018",
+    "customer_id": "CALL_021",
+    "label": "drop-off",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Hi, I wanted to buy a tablet with pay-in-3, but my credit score is around 610. Can I still qualify?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Our eligibility criteria requires a minimum CIBIL credit score of 650 with no active defaults in the last 24 months."
+      },
+      {
+        "speaker": "customer",
+        "text": "Can we bypass this score check? I have a stable monthly income of ₹50,000."
+      },
+      {
+        "speaker": "agent",
+        "text": "The credit score check is automated and cannot be manually bypassed by agents. It's a strict risk filter."
+      },
+      {
+        "speaker": "customer",
+        "text": "That is disappointing. I have the income but not the score. I'll search for other alternatives."
+      },
+      {
+        "speaker": "agent",
+        "text": "We apologize for the inconvenience. Thank you for your time today."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_022",
     "label": "won",
     "turns": [
       {
@@ -612,144 +748,8 @@
     ]
   },
   {
-    "customer_id": "CALL_019",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "Hi, is it true there are no interest charges on the pay-in-3 zero-cost EMI plan?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Yes, that's correct. The plan has 0% interest and ₹0 processing fees."
-      },
-      {
-        "speaker": "customer",
-        "text": "I'm still skeptical. Usually, there are hidden membership fees or setup charges. What's the catch?"
-      },
-      {
-        "speaker": "agent",
-        "text": "There are no setup or membership fees, but if you miss payments, standard penalty fees apply."
-      },
-      {
-        "speaker": "customer",
-        "text": "Ah, that is a catch. I don't want to get trapped in late fees. I will pass on this purchase for now."
-      },
-      {
-        "speaker": "agent",
-        "text": "I understand your concern. You're welcome to check out standard payment methods on our site. Thank you!"
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_020",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "Could you tell me what the penalty is if I miss an EMI installment?"
-      },
-      {
-        "speaker": "agent",
-        "text": "A late payment fee of 3% per month is applied on the outstanding overdue amount, capped at Rs. 500, and it is reported to credit bureaus."
-      },
-      {
-        "speaker": "customer",
-        "text": "Wait, it gets reported to the credit bureau even for a minor delay?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Yes, any payment delay must legally be reported to credit bureaus like CIBIL. It's a standard regulatory requirement."
-      },
-      {
-        "speaker": "customer",
-        "text": "No, I am trying to build my credit score and cannot risk any negative reports. I don't want to buy this way."
-      },
-      {
-        "speaker": "agent",
-        "text": "I understand your concern, but timely repayments actually improve your score. Let me know if you change your mind."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_021",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "I am trying to complete the checkout verification, but my Aadhaar is linked to my parent's mobile number."
-      },
-      {
-        "speaker": "agent",
-        "text": "The Aadhaar verification must be completed via OTP sent to the registered mobile number for e-KYC compliance."
-      },
-      {
-        "speaker": "customer",
-        "text": "My parents are traveling and I won't have access to their phone. Can we do Aadhaar verification with email?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Unfortunately, email verification is not supported. It must be OTP-based Aadhaar validation linked to your active mobile number."
-      },
-      {
-        "speaker": "customer",
-        "text": "Okay, that's not possible for me today. I'll just abandon the cart and buy later."
-      },
-      {
-        "speaker": "agent",
-        "text": "No worries. You can complete the purchase anytime once you have access to the registered device."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_022",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "Hi, I wanted to buy a tablet with pay-in-3, but my credit score is around 610. Can I still qualify?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Our eligibility criteria requires a minimum CIBIL credit score of 650 with no active defaults in the last 24 months."
-      },
-      {
-        "speaker": "customer",
-        "text": "Can we bypass this score check? I have a stable monthly income of ₹50,000."
-      },
-      {
-        "speaker": "agent",
-        "text": "The credit score check is automated and cannot be manually bypassed by agents. It's a strict risk filter."
-      },
-      {
-        "speaker": "customer",
-        "text": "That is disappointing. I have the income but not the score. I'll search for other alternatives."
-      },
-      {
-        "speaker": "agent",
-        "text": "We apologize for the inconvenience. Thank you for your time today."
-      }
-    ]
-  },
-  {
     "customer_id": "CALL_023",
-    "label": "drop-off",
+    "label": "won",
     "turns": [
       {
         "speaker": "agent",
@@ -757,27 +757,27 @@
       },
       {
         "speaker": "customer",
-        "text": "Hi, is it true there are no interest charges on the pay-in-3 zero-cost EMI plan?"
+        "text": "Hi, what documentation is required to complete the digital KYC process?"
       },
       {
         "speaker": "agent",
-        "text": "Yes, that's correct. The plan has 0% interest and ₹0 processing fees."
+        "text": "You will need a valid PAN card, Aadhaar linked to your mobile for OTP verification, and a 3-month bank statement PDF."
       },
       {
         "speaker": "customer",
-        "text": "I'm still skeptical. Usually, there are hidden membership fees or setup charges. What's the catch?"
+        "text": "Can I upload the bank statement manually or do I have to log in via net banking?"
       },
       {
         "speaker": "agent",
-        "text": "There are no setup or membership fees, but if you miss payments, standard penalty fees apply."
+        "text": "Either works! You can securely upload the PDF statement or use net banking login to verify monthly income instantly."
       },
       {
         "speaker": "customer",
-        "text": "Ah, that is a catch. I don't want to get trapped in late fees. I will pass on this purchase for now."
+        "text": "Okay, I have my PDF bank statement ready and my Aadhaar linked mobile is with me. Let's do it."
       },
       {
         "speaker": "agent",
-        "text": "I understand your concern. You're welcome to check out standard payment methods on our site. Thank you!"
+        "text": "Great! Let's get the digital verification links sent to your mobile number now."
       }
     ]
   },
@@ -791,108 +791,6 @@
       },
       {
         "speaker": "customer",
-        "text": "Could you tell me what the penalty is if I miss an EMI installment?"
-      },
-      {
-        "speaker": "agent",
-        "text": "A late payment fee of 3% per month is applied on the outstanding overdue amount, capped at Rs. 500, and it is reported to credit bureaus."
-      },
-      {
-        "speaker": "customer",
-        "text": "Wait, it gets reported to the credit bureau even for a minor delay?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Yes, any payment delay must legally be reported to credit bureaus like CIBIL. It's a standard regulatory requirement."
-      },
-      {
-        "speaker": "customer",
-        "text": "No, I am trying to build my credit score and cannot risk any negative reports. I don't want to buy this way."
-      },
-      {
-        "speaker": "agent",
-        "text": "I understand your concern, but timely repayments actually improve your score. Let me know if you change your mind."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_025",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "I am trying to complete the checkout verification, but my Aadhaar is linked to my parent's mobile number."
-      },
-      {
-        "speaker": "agent",
-        "text": "The Aadhaar verification must be completed via OTP sent to the registered mobile number for e-KYC compliance."
-      },
-      {
-        "speaker": "customer",
-        "text": "My parents are traveling and I won't have access to their phone. Can we do Aadhaar verification with email?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Unfortunately, email verification is not supported. It must be OTP-based Aadhaar validation linked to your active mobile number."
-      },
-      {
-        "speaker": "customer",
-        "text": "Okay, that's not possible for me today. I'll just abandon the cart and buy later."
-      },
-      {
-        "speaker": "agent",
-        "text": "No worries. You can complete the purchase anytime once you have access to the registered device."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_026",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
-        "text": "Hi, I wanted to buy a tablet with pay-in-3, but my credit score is around 610. Can I still qualify?"
-      },
-      {
-        "speaker": "agent",
-        "text": "Our eligibility criteria requires a minimum CIBIL credit score of 650 with no active defaults in the last 24 months."
-      },
-      {
-        "speaker": "customer",
-        "text": "Can we bypass this score check? I have a stable monthly income of ₹50,000."
-      },
-      {
-        "speaker": "agent",
-        "text": "The credit score check is automated and cannot be manually bypassed by agents. It's a strict risk filter."
-      },
-      {
-        "speaker": "customer",
-        "text": "That is disappointing. I have the income but not the score. I'll search for other alternatives."
-      },
-      {
-        "speaker": "agent",
-        "text": "We apologize for the inconvenience. Thank you for your time today."
-      }
-    ]
-  },
-  {
-    "customer_id": "CALL_027",
-    "label": "drop-off",
-    "turns": [
-      {
-        "speaker": "agent",
-        "text": "This call may be recorded and AI-assisted for quality purposes."
-      },
-      {
-        "speaker": "customer",
         "text": "Hi, is it true there are no interest charges on the pay-in-3 zero-cost EMI plan?"
       },
       {
@@ -918,7 +816,75 @@
     ]
   },
   {
-    "customer_id": "CALL_028",
+    "customer_id": "CALL_025",
+    "label": "won",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Hello, I see that you check credit score. Will this soft check impact my CIBIL score?"
+      },
+      {
+        "speaker": "agent",
+        "text": "No, the initial check is a soft inquiry. It will appear on your history but has 0% impact on your credit score."
+      },
+      {
+        "speaker": "customer",
+        "text": "That's good. What is the minimum score required to be eligible?"
+      },
+      {
+        "speaker": "agent",
+        "text": "We require a minimum CIBIL score of 650, with no defaults or active settlements in the last 24 months."
+      },
+      {
+        "speaker": "customer",
+        "text": "My score is 710, and I have never defaulted. I should be eligible, right?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Yes, you meet the criteria perfectly. Let's proceed to enter your details and run the check."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_026",
+    "label": "won",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Hi, I am interested in buying a television. What are the terms for the zero-cost EMI option?"
+      },
+      {
+        "speaker": "agent",
+        "text": "It's structured so that there is no interest charged. The merchant covers the financing costs entirely, meaning you pay exactly the product price."
+      },
+      {
+        "speaker": "customer",
+        "text": "Are there any hidden fees or processing charges at checkout?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Absolutely not. The processing fee is flat ₹0. You pay only the sticker price of the television."
+      },
+      {
+        "speaker": "customer",
+        "text": "That sounds perfect. How do we start the application?"
+      },
+      {
+        "speaker": "agent",
+        "text": "Excellent! I can guide you through the process right now. Let's begin the digital verification."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_027",
     "label": "drop-off",
     "turns": [
       {
@@ -948,6 +914,40 @@
       {
         "speaker": "agent",
         "text": "I understand your concern, but timely repayments actually improve your score. Let me know if you change your mind."
+      }
+    ]
+  },
+  {
+    "customer_id": "CALL_028",
+    "label": "won",
+    "turns": [
+      {
+        "speaker": "agent",
+        "text": "This call may be recorded and AI-assisted for quality purposes."
+      },
+      {
+        "speaker": "customer",
+        "text": "Hello, I want to understand the exact repayment timeline for the pay-in-3 plan."
+      },
+      {
+        "speaker": "agent",
+        "text": "The repayment is split into three equal installments. The first is paid instantly at checkout, the second on Day 30, and the third on Day 60."
+      },
+      {
+        "speaker": "customer",
+        "text": "What happens if my salary is delayed and I miss the Day 30 payment?"
+      },
+      {
+        "speaker": "agent",
+        "text": "We offer a 3-day grace window. If payment is delayed beyond that, a late fee of 3% per month is charged only on the overdue amount, capped at Rs. 500."
+      },
+      {
+        "speaker": "customer",
+        "text": "Capped at Rs. 500 is reasonable. I will make sure my balance is maintained. Let's proceed."
+      },
+      {
+        "speaker": "agent",
+        "text": "Perfect choice. We also send reminders 3 days before any auto-debit so you can manage your bank balance."
       }
     ]
   },

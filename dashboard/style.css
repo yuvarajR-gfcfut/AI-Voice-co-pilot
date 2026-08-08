@@ -260,6 +260,8 @@ body {
     gap: 24px;
     flex: 1;
     overflow: hidden;
+    /* [ELEVATED] Primary feature — dominates the remaining vertical space */
+    min-height: 600px;
 }
 
 .workspace-panel {
@@ -828,20 +830,42 @@ body {
 .bg-amber-900 { background-color: rgba(120, 53, 4, 0.5); }
 .text-amber-300 { color: #fde047; }
 
-/* Chart.js Layout Classes */
-.bg-gray-900 { background: var(--bg-card); }
-.border-gray-800 { border: 1px solid var(--border-color); }
-.p-4 { padding: 16px; }
-.rounded-xl { border-radius: 16px; }
-.text-sm { font-size: 13px; }
-.font-semibold { font-weight: 600; }
-.text-gray-400 { color: var(--text-muted); }
-.mb-2 { margin-bottom: 8px; }
-.h-48 { height: 192px; }
-.grid { display: grid; }
-.grid-cols-1 { grid-template-columns: 1fr; }
-@media (min-width: 768px) {
-    .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+/* Visual Analytics Chart Layout Styles */
+.analytics-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* [SECONDARY] Compact gap — analytics is a summary strip, not the hero */
+    gap: 12px;
+    margin-bottom: 16px;
 }
-.gap-4 { gap: 16px; }
-.mb-6 { margin-bottom: 24px; }
+
+@media (min-width: 768px) {
+    .analytics-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.analytics-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    /* [SECONDARY] Reduced from 16px — tighter card footprint */
+    padding: 10px 12px;
+    border-radius: 12px;
+}
+
+.analytics-card-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    /* [SECONDARY] Reduced from 12px — less breathing room for secondary elements */
+    margin-bottom: 8px;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.analytics-chart-container {
+    /* [SECONDARY] Reduced from 192px to 140px — summary strip height */
+    height: 140px;
+    position: relative;
+}

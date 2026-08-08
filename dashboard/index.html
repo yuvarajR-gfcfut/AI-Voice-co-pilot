@@ -69,14 +69,14 @@
             </header>
 
             <!-- Visual Analytics Charts Row -->
-            <div class="grid md:grid-cols-2 gap-4 mb-6" style="display: grid;">
-              <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-                <h3 class="text-sm font-semibold text-gray-400 mb-2">Call Outcomes Breakdown</h3>
-                <div class="h-48"><canvas id="outcomeChart"></canvas></div>
+            <div class="analytics-row">
+              <div class="analytics-card">
+                <h3 class="analytics-card-title">Call Outcomes Breakdown</h3>
+                <div class="analytics-chart-container"><canvas id="outcomeChart"></canvas></div>
               </div>
-              <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl">
-                <h3 class="text-sm font-semibold text-gray-400 mb-2">Customer Intent Distribution</h3>
-                <div class="h-48"><canvas id="intentChart"></canvas></div>
+              <div class="analytics-card">
+                <h3 class="analytics-card-title">Customer Intent Distribution</h3>
+                <div class="analytics-chart-container"><canvas id="intentChart"></canvas></div>
               </div>
             </div>
 

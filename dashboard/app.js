@@ -7,6 +7,12 @@ let lastRenderedSessionId = null;
 let lastRenderedTurnsCount = 0;
 let lastRenderedOutcome = null;
 
+// Track total turn count across all sessions for chart change detection
+let lastChartTurnCount = -1;
+
+// Keyed decision store: { "CALL_001-3": { status: 'APPROVED'|'OVERRIDDEN', text, timestamp } }
+const humanDecisions = {};
+
 // Track whether the user has manually scrolled up
 let isUserScrolledUp = false;
 
@@ -53,6 +59,24 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Immediately fetch and render
             updateTranscriptView(sessionId, true);
+
+            // Clear audit log and repopulate with decisions for the newly selected session
+            const logContainer = document.getElementById('human-audit-log');
+            if (logContainer) {
+                logContainer.innerHTML = '<div class="log-empty-state">No actions logged yet.</div>';
+                // Collect all matching decisions for this session, in turn order
+                const sessionDecisions = Object.entries(humanDecisions)
+                    .filter(([key]) => key.startsWith(`${sessionId}-`))
+                    .sort(([a], [b]) => {
+                        const idxA = parseInt(a.split('-').pop(), 10);
+                        const idxB = parseInt(b.split('-').pop(), 10);
+                        return idxA - idxB;
+                    });
+                // Prepend in reverse so newest appears at top
+                sessionDecisions.reverse().forEach(([, decision]) => {
+                    renderAuditEntry(decision.status, decision.text, decision.timestamp, logContainer);
+                });
+            }
         }
     });
 });
@@ -103,7 +127,6 @@ function processFeed(feedData) {
     
     updateSidebar();
     updateStats();
-    initAnalyticsCharts(sessions);
     
     // Select default or keep selected
     if (selectedSessionId && sessions[selectedSessionId]) {
@@ -111,6 +134,19 @@ function processFeed(feedData) {
     } else if (newSessionIds.length > 0) {
         selectedSessionId = newSessionIds[0];
         updateTranscriptView(selectedSessionId, true);
+    }
+
+    // Chart initialization runs last and is fully isolated — failures must never
+    // block session auto-select or transcript view rendering above.
+    // Only reinitialize charts if the total turn count across sessions has changed.
+    const currentTurnCount = Object.values(sessions).reduce((sum, s) => sum + s.turns.length, 0);
+    if (currentTurnCount !== lastChartTurnCount) {
+        lastChartTurnCount = currentTurnCount;
+        try {
+            initAnalyticsCharts(sessions);
+        } catch (chartErr) {
+            console.error('[Analytics] Chart initialization failed:', chartErr);
+        }
     }
 }
 
@@ -312,24 +348,47 @@ function showCopilotInsight(turn) {
     container.classList.remove('hidden');
     
     const textarea = document.getElementById('recommendation-textarea');
-    if (textarea) {
-        textarea.value = turn.final_suggestion;
-        textarea.disabled = false;
-        textarea.removeAttribute('data-action-logged');
+
+    // Check if this turn already has a stored decision
+    const decisionKey = `${selectedSessionId}-${selectedTurnIndex}`;
+    const existingDecision = humanDecisions[decisionKey];
+
+    if (existingDecision) {
+        // Restore locked state — do NOT reset to pending
+        if (textarea) {
+            textarea.value = turn.final_suggestion;
+            textarea.disabled = true;
+            textarea.setAttribute('data-action-logged', existingDecision.status);
+        }
+        const badgeLabel = existingDecision.status === 'APPROVED' ? 'Human Verified' : 'Human Overridden';
+        updateComplianceBadge(badgeLabel);
+
+        const approveBtn = document.getElementById('approve-btn');
+        const overrideBtn = document.getElementById('override-btn');
+        const lockStatus = document.getElementById('lock-status');
+        const bubble = document.querySelector('.human-oversight-bubble');
+        if (approveBtn) approveBtn.disabled = true;
+        if (overrideBtn) overrideBtn.disabled = true;
+        if (lockStatus) lockStatus.classList.remove('hidden');
+        if (bubble) bubble.classList.add('locked');
+    } else {
+        // Fresh turn — reset to pending state
+        if (textarea) {
+            textarea.value = turn.final_suggestion;
+            textarea.disabled = false;
+            textarea.removeAttribute('data-action-logged');
+        }
+        updateComplianceBadge('Pending Review');
+
+        const approveBtn = document.getElementById('approve-btn');
+        const overrideBtn = document.getElementById('override-btn');
+        const lockStatus = document.getElementById('lock-status');
+        const bubble = document.querySelector('.human-oversight-bubble');
+        if (approveBtn) approveBtn.disabled = false;
+        if (overrideBtn) overrideBtn.disabled = false;
+        if (lockStatus) lockStatus.classList.add('hidden');
+        if (bubble) bubble.classList.remove('locked');
     }
-    
-    // Reset compliance badge status
-    updateComplianceBadge('Pending Review');
-    
-    const approveBtn = document.getElementById('approve-btn');
-    const overrideBtn = document.getElementById('override-btn');
-    const lockStatus = document.getElementById('lock-status');
-    const bubble = document.querySelector('.human-oversight-bubble');
-    
-    if (approveBtn) approveBtn.disabled = false;
-    if (overrideBtn) overrideBtn.disabled = false;
-    if (lockStatus) lockStatus.classList.add('hidden');
-    if (bubble) bubble.classList.remove('locked');
 
     document.getElementById('copilot-intent').innerText = turn.intent.replace('_', ' ').toUpperCase();
     document.getElementById('copilot-fact').innerText = turn.kb_fact || 'No grounding fact required.';
@@ -394,31 +453,14 @@ function lockOversightUI(actionType) {
     if (bubble) bubble.classList.add('locked');
 }
 
-// Append new entry to the Human Oversight Log audit trail
-function appendAuditEntry(status, text) {
-    const logContainer = document.getElementById('human-audit-log');
-    if (!logContainer) return;
-    
-    // Remove empty state if present
-    const emptyState = logContainer.querySelector('.log-empty-state');
-    if (emptyState) {
-        emptyState.remove();
-    }
-    
-    // Generate timestamp using toLocaleTimeString with custom 2-digit format
-    const timestamp = new Date().toLocaleTimeString(undefined, {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    });
-    
-    // Create new div matching required tailwind structure class
+// Render a single audit entry into a given container (used by both appendAuditEntry and session restore)
+function renderAuditEntry(status, text, timestamp, container) {
+    const emptyState = container.querySelector('.log-empty-state');
+    if (emptyState) emptyState.remove();
+
     const entryDiv = document.createElement('div');
     entryDiv.className = 'text-xs p-2 mb-1 rounded bg-gray-800 border border-gray-700 flex justify-between items-center';
-    
-    // Apply green or orange badge styling based on approval/override state
     const badgeClass = status === 'APPROVED' ? 'bg-green-900 text-green-300' : 'bg-amber-900 text-amber-300';
-    
     entryDiv.innerHTML = `
         <div style="display: flex; gap: 8px; align-items: center;">
             <span class="badge ${badgeClass}" style="padding: 2px 6px; font-size: 10px;">${status}</span>
@@ -426,9 +468,22 @@ function appendAuditEntry(status, text) {
         </div>
         <span style="color: var(--text-dark); font-size: 11px;">${timestamp}</span>
     `;
+    container.insertBefore(entryDiv, container.firstChild);
+}
+
+// Append new entry to the Human Oversight Log audit trail
+function appendAuditEntry(status, text) {
+    const logContainer = document.getElementById('human-audit-log');
+    if (!logContainer) return;
     
-    // Prepend entry to top of the log container
-    logContainer.insertBefore(entryDiv, logContainer.firstChild);
+    // Generate timestamp using toLocaleTimeString with custom 2-digit format
+    const timestamp = new Date().toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
+    renderAuditEntry(status, text, timestamp, logContainer);
 }
 
 // Update the compliance status badge element
@@ -450,7 +505,14 @@ document.body.addEventListener('click', (e) => {
         e.preventDefault();
         const textarea = document.getElementById('recommendation-textarea');
         const text = textarea ? textarea.value : '';
-        
+        const timestamp = new Date().toLocaleTimeString(undefined, {
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+
+        // Persist decision keyed by session + turn
+        const decisionKey = `${selectedSessionId}-${selectedTurnIndex}`;
+        humanDecisions[decisionKey] = { status: 'APPROVED', text, timestamp };
+
         appendAuditEntry('APPROVED', text);
         showToast('AI Recommendation Approved & Sent');
         updateComplianceBadge('Human Verified');
@@ -461,7 +523,14 @@ document.body.addEventListener('click', (e) => {
         e.preventDefault();
         const textarea = document.getElementById('recommendation-textarea');
         const text = textarea ? textarea.value : '';
-        
+        const timestamp = new Date().toLocaleTimeString(undefined, {
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+
+        // Persist decision keyed by session + turn
+        const decisionKey = `${selectedSessionId}-${selectedTurnIndex}`;
+        humanDecisions[decisionKey] = { status: 'OVERRIDDEN', text, timestamp };
+
         appendAuditEntry('OVERRIDDEN', text);
         showToast('Custom Response Sent (Human Override)');
         updateComplianceBadge('Human Overridden');
@@ -523,90 +592,102 @@ function initAnalyticsCharts(sessionsData) {
     const ctxOutcome = document.getElementById('outcomeChart');
     if (ctxOutcome) {
         if (outcomeChartInstance) {
-            outcomeChartInstance.destroy();
-        }
-        outcomeChartInstance = new Chart(ctxOutcome, {
-            type: 'doughnut',
-            data: {
-                labels: ['Won', 'Drop-Off'],
-                datasets: [{
-                    data: [wonCount, dropOffCount],
-                    backgroundColor: [
-                        'rgba(16, 185, 129, 0.65)',
-                        'rgba(239, 68, 68, 0.65)'
-                    ],
-                    borderColor: [
-                        'rgba(16, 185, 129, 1)',
-                        'rgba(239, 68, 68, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            color: textMuted,
-                            font: { family: 'Plus Jakarta Sans', size: 11 }
+            // Reuse existing instance — update data in place, no DOM teardown
+            outcomeChartInstance.data.datasets[0].data = [wonCount, dropOffCount];
+            outcomeChartInstance.update('none');
+        } else {
+            outcomeChartInstance = new Chart(ctxOutcome, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Won', 'Drop-Off'],
+                    datasets: [{
+                        data: [wonCount, dropOffCount],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.65)',
+                            'rgba(239, 68, 68, 0.65)'
+                        ],
+                        borderColor: [
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(239, 68, 68, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: textMuted,
+                                font: { family: 'Plus Jakarta Sans', size: 11 }
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     // Customer Intent Bar Chart
     const ctxIntent = document.getElementById('intentChart');
     if (ctxIntent) {
         if (intentChartInstance) {
-            intentChartInstance.destroy();
-        }
-        intentChartInstance = new Chart(ctxIntent, {
-            type: 'bar',
-            data: {
-                labels: ['Pricing', 'Credit Score', 'KYC', 'Eligibility', 'Objections'],
-                datasets: [{
-                    label: 'Intent distribution',
-                    data: [
-                        intentCounts['Pricing'],
-                        intentCounts['Credit Score'],
-                        intentCounts['KYC'],
-                        intentCounts['Eligibility'],
-                        intentCounts['Objections']
-                    ],
-                    backgroundColor: 'rgba(99, 102, 241, 0.65)',
-                    borderColor: 'rgba(99, 102, 241, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
+            // Reuse existing instance — update data in place, no DOM teardown
+            intentChartInstance.data.datasets[0].data = [
+                intentCounts['Pricing'],
+                intentCounts['Credit Score'],
+                intentCounts['KYC'],
+                intentCounts['Eligibility'],
+                intentCounts['Objections']
+            ];
+            intentChartInstance.update('none');
+        } else {
+            intentChartInstance = new Chart(ctxIntent, {
+                type: 'bar',
+                data: {
+                    labels: ['Pricing', 'Credit Score', 'KYC', 'Eligibility', 'Objections'],
+                    datasets: [{
+                        label: 'Intent distribution',
+                        data: [
+                            intentCounts['Pricing'],
+                            intentCounts['Credit Score'],
+                            intentCounts['KYC'],
+                            intentCounts['Eligibility'],
+                            intentCounts['Objections']
+                        ],
+                        backgroundColor: 'rgba(99, 102, 241, 0.65)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 1
+                    }]
                 },
-                scales: {
-                    x: {
-                        grid: { color: borderDark },
-                        ticks: {
-                            color: textMuted,
-                            font: { family: 'Plus Jakarta Sans', size: 10 }
-                        }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
                     },
-                    y: {
-                        grid: { color: borderDark },
-                        beginAtZero: true,
-                        ticks: {
-                            color: textMuted,
-                            precision: 0,
-                            font: { family: 'Plus Jakarta Sans', size: 10 }
+                    scales: {
+                        x: {
+                            grid: { color: borderDark },
+                            ticks: {
+                                color: textMuted,
+                                font: { family: 'Plus Jakarta Sans', size: 10 }
+                            }
+                        },
+                        y: {
+                            grid: { color: borderDark },
+                            beginAtZero: true,
+                            ticks: {
+                                color: textMuted,
+                                precision: 0,
+                                font: { family: 'Plus Jakarta Sans', size: 10 }
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 }
